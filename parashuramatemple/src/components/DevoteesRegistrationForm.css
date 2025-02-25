@@ -1,0 +1,207 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+h2 {
+  text-align: center;
+  color: rgb(96, 2, 2); /* Dark maroon */
+  margin-top: 30px;
+}
+
+/* Form Container */
+.devotees-form-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  color: rgb(96, 2, 2);
+  margin-bottom: 5px;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+
+input[type="date"] {
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  background-color: rgb(96, 2, 2);
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #6c1d1d;
+}
+
+/* Modal Container */
+.devotee-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.devotee-modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* Close Button */
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-modal-btn:hover {
+  color: #6c1d1d;
+}
+
+/* Modal Body */
+.modal-body {
+  text-align: left;
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.modal-body p {
+  margin: 8px 0;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.confirm-btn, .cancel-btn {
+  flex: 1;
+  padding: 10px 15px;
+  margin: 0 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: rgb(96, 2, 2);
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #6c1d1d;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+}
+
+.cancel-btn:hover {
+  background-color: #aaa;
+}
+
+/* Success Modal */
+.success-modal h3 {
+  color: rgb(96, 2, 2);
+}
+
+.success-close-btn {
+  background-color: rgb(96, 2, 2);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.success-close-btn:hover {
+  background-color: rgb(96, 2, 2);
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .confirm-btn, .cancel-btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+.error-border {
+  border: 2px solid rgb(123, 5, 5);
+  box-shadow: 0 0 5px rgb(86, 2, 2); /* Adds a red glow effect */
+}
+
+.error {
+  color: rgb(128, 12, 12);
+  font-size: 0.8em;
+  text-shadow: 1px 1px 2px rgba
+}

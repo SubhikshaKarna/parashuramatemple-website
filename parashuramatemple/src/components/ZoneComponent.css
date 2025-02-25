@@ -1,0 +1,200 @@
+/* Center the form container */
+.zone-form-container {
+  max-width: 400px;
+  margin: 50px auto; /* Centers the form */
+  padding: 25px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f9f9f9, #ececec);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Ensure inner elements align properly */
+.zone-form-container h2,
+.zone-form-container label,
+.zone-form-container input,
+.zone-form-container button {
+  width: 100%;
+}
+
+/* Form Heading */
+.zone-form-container h2 {
+  font-size: 26px;
+  color: #222;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Form Label */
+.zone-form-container label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #444;
+  text-align: left;
+  width: 100%;
+}
+
+/* Input Box */
+.zone-form-container input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  transition: border 0.3s ease-in-out;
+}
+
+.zone-form-container input:focus {
+  border: 1px solid rgb(96, 2, 2);
+  outline: none;
+  box-shadow: 0 0 5px rgba(96, 2, 2, 0.5);
+}
+
+/* Submit Button */
+.zone-form-container button {
+  background: rgb(96, 2, 2);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.zone-form-container button:hover {
+  background: #e4ae5c;
+  color: #222; /* Improved contrast */
+  transform: scale(1.05);
+}
+
+.zone-form-container button:active {
+  background: rgb(96, 2, 2);
+  transform: scale(1);
+}
+
+.zone-form-container button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .zone-form-container {
+    max-width: 90%;
+    padding: 20px;
+    margin: 30px auto;
+  }
+
+  .zone-form-container h2 {
+    font-size: 22px;
+  }
+
+  .zone-form-container label {
+    font-size: 14px;
+  }
+
+  .zone-form-container input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .zone-form-container button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .zone-form-container {
+    max-width: 95%;
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .zone-form-container h2 {
+    font-size: 20px;
+  }
+
+  .zone-form-container label {
+    font-size: 13px;
+  }
+
+  .zone-form-container input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .zone-form-container button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Fullscreen overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide popup */
+.popup-overlay.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Centered form container inside popup */
+.popup-overlay .zone-form-container {
+  max-width: 400px;
+  padding: 25px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f9f9f9, #ececec);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Close Button */
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: rgb(96, 2, 2);
+  transition: 0.3s;
+}
+
+.popup-close:hover {
+  color: #e4ae5c;
+}

@@ -1,0 +1,197 @@
+/* General container */
+.delete-pooja-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Updated max-width for consistency */
+  margin: 30px auto;
+}
+
+.delete-pooja-title {
+  font-size: 24px; /* Updated font size to match the zone container */
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 80%; /* Maintain responsive width */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #f39c12;
+}
+
+.pooja-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.pooja-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pooja-name {
+  font-size: 18px;
+  color: #333;
+}
+
+.delete-pooja-btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: rgb(96, 2, 2);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: auto;
+  min-width: 100px;
+}
+
+.delete-pooja-btn:hover {
+  background-color: rgb(96, 2, 2);
+}
+
+.delete-pooja-btn:active {
+  background-color: rgb(96, 2, 2);
+}
+
+.message {
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Styles for the confirmation modal */
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 14px; /* Smaller font size */
+}
+
+.modal-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  font-size: 12px;  /* Smaller button font size */
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-btn:first-child {
+  background-color: rgb(96, 2, 2);
+  color: white;
+}
+
+.modal-btn:last-child {
+  background-color: transparent;
+  color: #333;
+  font-size: 18px; /* Larger size for the 'X' */
+  border: none;
+  padding: 0;
+}
+
+.modal-btn:hover {
+  background-color: rgb(96, 2, 2);
+}
+
+.modal-btn:last-child:hover {
+  color: rgb(96, 2, 2); /* Change color of 'X' on hover */
+}
+
+/* Close Button in the Top Right */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 18px;
+  color: rgb(96, 2, 2);
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: rgb(96, 2, 2);
+}
+
+.no-pooja-message {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .delete-pooja-container {
+    width: 95%;
+  }
+
+  .delete-pooja-title {
+    font-size: 20px; /* Smaller font size on mobile */
+  }
+
+  .search-input {
+    max-width: 100%;
+  }
+
+  .pooja-item {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    padding: 15px;
+  }
+
+  .pooja-name {
+    font-size: 16px;
+  }
+
+  .delete-pooja-btn {
+    width: 100%;
+    margin-top: 10px; /* Make the button full-width */
+  }
+}

@@ -1,0 +1,140 @@
+/* Overall layout */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between; /* Footer pushed to the bottom */
+  background-color: #f8f3eb; /* Cream background color */
+}
+
+/* Login content */
+.login-content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Add padding for smaller screens */
+}
+
+/* Login form container */
+.login-container {
+  background-color: #ffffff; /* White background */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  width: 100%;
+  max-width: 400px; /* Maximum width for responsiveness */
+  text-align: center; /* Center the text horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text vertically */
+  align-items: center; /* Align content horizontally */
+  transition: all 0.3s ease; /* Smooth transition for resizing */
+}
+
+/* Login title */
+.login-container h2 {
+  color: #c77d00; /* Orange text color */
+  margin-bottom: 20px;
+  font-size: 24px; /* Larger font size */
+}
+
+/* Form layout */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Consistent spacing between rows */
+  width: 100%;
+}
+
+/* Label styles */
+.login-container label {
+  font-size: 14px;
+  color: #333;
+  text-align: left; /* Align text to the left for better readability */
+  width: 100%;
+}
+
+/* Input field styles */
+.login-container input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%; /* Take up full width */
+  box-sizing: border-box; /* Includes padding in width calculation */
+}
+
+/* Button styles */
+.login-container button {
+  background-color: #c77d00; /* Orange button */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%; /* Full-width button */
+  margin-top: 10px;
+}
+
+/* Button hover effect */
+.login-container button:hover {
+  background-color: #a66500; /* Darker orange */
+  transform: scale(1.02); /* Slight zoom effect */
+}
+
+/* Focus styles for input fields */
+.login-container input:focus {
+  border-color: #c77d00; /* Orange border */
+  outline: none;
+  box-shadow: 0 0 5px rgba(199, 125, 0, 0.5); /* Glow effect */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 20px;
+    width: 90%; /* Adjust width for tablets */
+  }
+
+  .login-container h2 {
+    font-size: 22px; /* Slightly smaller title for tablets */
+  }
+
+  .login-container button {
+    font-size: 15px; /* Adjust button size */
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 15px;
+    width: 100%; /* Fit to screen width */
+  }
+
+  .login-container h2 {
+    font-size: 18px; /* Smaller title for mobile */
+  }
+
+  .login-container button {
+    font-size: 14px; /* Adjust button size */
+  }
+
+  .login-container label {
+    font-size: 13px; /* Slightly smaller labels */
+  }
+}
+
+/* Responsive for very small devices */
+@media (max-width: 320px) {
+  .login-container h2 {
+    font-size: 16px; /* Even smaller title for tiny screens */
+  }
+
+  .login-container input,
+  .login-container button {
+    font-size: 12px; /* Smaller inputs and buttons */
+  }
+}

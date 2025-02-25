@@ -1,0 +1,16 @@
+.footer {
+  background-color: maroon; /* Maroon background for footer */
+  color: white; /* White text */
+  text-align: center; /* Center the text */
+  padding: 15px 0; /* Padding for the footer */
+  width: 100%; /* Ensure footer takes full width of the viewport */
+  position: fixed; /* Fix the footer at the bottom */
+  bottom: 0; /* Position at the bottom of the page */
+  left: 0; /* Align to the left edge */
+  z-index: 1000; /* Optional: To ensure it is above overlapping content */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 18px;
+}

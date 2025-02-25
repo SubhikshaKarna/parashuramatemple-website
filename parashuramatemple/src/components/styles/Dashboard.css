@@ -1,0 +1,278 @@
+/* General Layout */
+.dashboard {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: white;
+  justify-content: center; 
+}
+
+/* Sidebar Styling */
+.sidebar {
+  background-color: white;
+  color: #4e342e;
+  width: 90px; /* Reduced collapsed width */
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  transition: width 0.3s ease; /* Smooth transition for width change */
+  z-index: 1000;
+}
+
+/* Sidebar Title */
+.sidebar-title {
+  font-size: 16px; /* Reduced from 20px */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  white-space: nowrap;
+}
+
+/* Sidebar Buttons */
+.sidebar-button {
+  background-color:  #f9f3e8;
+  color: rgb(96, 2, 2);
+  border: none;
+  padding: 10px 15px; /* Adjusted padding for better fit */
+  font-size: 13px; /* Reduced from 16px */
+  text-align: center;
+  margin: 8px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 70%; /* Ensures buttons remain visible */
+  text-align: left;
+  padding-left: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center; /* Truncate text when the sidebar is collapsed */
+}
+
+/* Sidebar Active Button */
+.sidebar-button.active {
+  background-color: rgb(96, 2, 2);
+  font-size: 14px; /* Maintain consistency */
+  color: white;
+}
+
+/* Hover effect for buttons */
+.sidebar-button:hover {
+  background-color: rgb(96, 2, 2);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.sidebar:hover .sidebar-button {
+  white-space: normal; /* Allow text to wrap when sidebar is expanded */
+  text-overflow: unset; /* Remove ellipsis when sidebar is expanded */
+}
+
+/* Sidebar Hover Effect */
+.sidebar:hover {
+  width: 220px; /* Reduced expanded width */
+}
+
+.sidebar:not(:hover) {
+  width: 90px; /* Reduced collapsed width */
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 90px; /* Adjusted for the new collapsed width */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px; /* Reduced padding to bring content closer */
+  transition: margin-left 0.3s ease; /* Smooth transition when sidebar changes width */
+  margin-top: 0; /* Ensured no gap above the header */
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 220px; /* Adjust main content margin when sidebar expands */
+}
+
+/* Content Area */
+.content-area {
+  overflow-y: auto;
+  background-color: white;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  margin-top: 70px;
+  background-color: #fff;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease; /* Ensures it moves with the sidebar */
+  margin-top: 50px; /* No gap above the container */
+}
+
+/* Dashboard Title */
+.dashboard-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #4e342e;
+  margin-bottom: 50px;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; /* Reduced gap between cards */
+  justify-content: center;
+  margin: 10px 0; /* Reduced margin between card container and other elements */
+  max-width: 80%; /* Reduced width of the card container */
+  margin-left: auto;
+  margin-right: auto; /* Center the container */
+  min-height: 400px; /* Increased height of the card container */
+}
+
+/* Individual Dashboard Cards */
+.dashboard-card {
+  background-color: #f9f3e8;
+  color: #4e342e;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 30px;
+  text-align: center;
+  border-radius: 10px;
+  width: 300px; /* Reduced width of individual cards */
+  height: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.dashboard-card:hover {
+  background-color: rgb(96, 2, 2);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Header Styling with 0 Padding */
+.header {
+  padding: 0; /* Set padding to 0 */
+  margin: 0; /* Ensure no margin above header */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 90px;
+  }
+
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-card {
+    width: 50%;
+    height: auto;
+    padding: 20px;
+  }
+}
+/* Responsive Design for Cards */
+@media (max-width: 1024px) {
+  .card-container {
+    max-width: 95%; /* Allow better spacing */
+    gap: 15px;
+  }
+
+  .dashboard-card {
+    width: 220px; /* Reduce card size */
+    height: 160px;
+    font-size: 16px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .dashboard-card {
+    width: 90%; /* Make cards take more width */
+    height: auto;
+    padding: 18px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    width: 100%; /* Ensure full width */
+  }
+
+  .dashboard-card {
+    width: 100%; /* Cards now take full width */
+    padding: 15px;
+    font-size: 14px;
+    height: auto;
+  }
+}
+/* Ensure consistent box-sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsive Design for Cards */
+@media (max-width: 1024px) {
+  .card-container {
+    max-width: 95% !important;
+    gap: 15px !important;
+  }
+
+  .dashboard-card {
+    width: 220px !important;
+    height: 160px !important;
+    font-size: 16px !important;
+    padding: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .dashboard-card {
+    width: 95% !important; /* Adjusted for better fit */
+    height: auto !important;
+    padding: 18px !important;
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    width: 100% !important;
+  }
+
+  .dashboard-card {
+    width: 75% !important;
+    padding: 15px !important;
+    font-size: 14px !important;
+    height: auto !important;
+  }
+}
