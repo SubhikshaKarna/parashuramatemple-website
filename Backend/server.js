@@ -122,29 +122,41 @@ app.post("/register-pooja", (req, res) => {
 });
 
 
-// 🔹 API to Register a Devotee
 app.post("/register-devotee", (req, res) => {
-  const { name, parentName, dob, mobile, email, pincode, zone, address1, address2, address3, address4 } = req.body;
+  const { 
+    name, parentName, dob, mobile, email, pincode, zone, 
+    address1, address2, address3, address4, 
+    rashi, nakshatra, gotra 
+  } = req.body;
 
-  // Validation: Ensure required fields are provided
-  if (!name || !parentName || !dob || !mobile || !email || !pincode || !zone) {
+  if (!name || !parentName || !dob || !mobile || !pincode || !zone) {
     return res.status(400).json({ error: "⚠️ All required fields must be filled" });
   }
 
-  // Combine address lines into a single address string
-  const fullAddress = `${address1 ? address1 + ", " : ""}${address2 ? address2 + ", " : ""}${address3 ? address3 + ", " : ""}${address4 ? address4 : ""}`;
+  if (!/^\d{10,15}$/.test(mobile)) {
+    return res.status(400).json({ error: "⚠️ Invalid mobile number format" });
+  }
 
-  // Insert into the database
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    return res.status(400).json({ error: "⚠️ Invalid date format (Use YYYY-MM-DD)" });
+  }
+
+  const fullAddress = [address1, address2, address3, address4].filter(Boolean).join(", ");
+
   const query = `
-    INSERT INTO devotees (name, parent_name, dob, mobile, email, pincode, address, zone)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO devotees (name, parent_name, dob, mobile, email, pincode, address, zone, rashi, nakshatra, gotra)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
-  
-  db.query(query, [name, parentName, dob, mobile, email, pincode, fullAddress, zone], (err, result) => {
+
+  db.query(query, [name, parentName, dob, mobile, email, pincode, fullAddress, zone, rashi, nakshatra, gotra], (err, result) => {
     if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.status(400).json({ error: "⚠️ Mobile number or email already exists" });
+      }
+      console.error("❌ Database Insert Error:", err);
       return res.status(500).json({ error: "⚠️ Error inserting devotee" });
     }
-    res.status(201).json({ message: "🎉 Devotee registered successfully" });
+    res.status(201).json({ message: "🎉 Devotee registered successfully", devoteeId: result.insertId });
   });
 });
 
@@ -397,34 +409,115 @@ app.delete("/api/delete/pooja-registration/:id", (req, res) => {
   });
 });
 
-// Fetch devotees by name (partial match)
 app.get("/devotees", (req, res) => {
   const { name } = req.query;
-  const query = `SELECT id, name, parent_name, dob, mobile, email, pincode, zone, address FROM devotees WHERE name LIKE ?`;
+  if (!name) {
+    return res.status(400).json({ error: "⚠️ Name query parameter is required" });
+  }
+
+  const query = `SELECT id, name, parent_name, dob, mobile, email, pincode, zone, address, rashi, nakshatra, gotra 
+                 FROM devotees WHERE name LIKE ?`;
+
   db.query(query, [`%${name}%`], (err, results) => {
-    if (err) return res.status(500).send(err);
+    if (err) {
+      console.error("❌ Database Fetch Error:", err);
+      return res.status(500).json({ error: "⚠️ Error fetching devotees" });
+    }
     res.json(results);
   });
 });
 
-// Update devotee details
+
 app.put("/devotees/:id", (req, res) => {
   const { id } = req.params;
-  const { name, parent_name, dob, mobile, email, pincode, zone, address } = req.body;
-  const query = `UPDATE devotees SET name=?, parent_name=?, dob=?, mobile=?, email=?, pincode=?, zone=?, address=? WHERE id=?`;
+  const { 
+    name, parent_name, dob, mobile, email, pincode, zone, 
+    address1, address2, address3, address4, rashi, nakshatra, gotra 
+  } = req.body;
 
-  db.query(query, [name, parent_name, dob, mobile, email, pincode, zone, address, id], (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.json({ message: "Updated successfully" });
+  if (!name || !parent_name || !dob || !mobile || !pincode || !zone) {
+    return res.status(400).json({ error: "⚠️ All required fields must be filled" });
+  }
+
+  if (!/^\d{10,15}$/.test(mobile)) {
+    return res.status(400).json({ error: "⚠️ Invalid mobile number format" });
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+    return res.status(400).json({ error: "⚠️ Invalid date format (Use YYYY-MM-DD)" });
+  }
+
+  const fullAddress = [address1, address2, address3, address4].filter(Boolean).join(", ");
+
+  const query = `
+    UPDATE devotees 
+    SET name=?, parent_name=?, dob=?, mobile=?, email=?, pincode=?, zone=?, address=?, rashi=?, nakshatra=?, gotra=? 
+    WHERE id=?
+  `;
+
+  db.query(query, [name, parent_name, dob, mobile, email, pincode, zone, fullAddress, rashi, nakshatra, gotra, id], (err, result) => {
+    if (err) {
+      console.error("❌ Database Update Error:", err);
+      return res.status(500).json({ error: "⚠️ Error updating devotee" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "⚠️ Devotee not found" });
+    }
+
+    res.json({ message: "✅ Devotee updated successfully" });
   });
 });
 
 
 
 
+// 🔹 API to Fetch Devotees by Zone
+app.get("/get-devotees", (req, res) => {
+  const { zone } = req.query;
+  if (!zone) {
+    return res.status(400).json({ error: "⚠️ Zone parameter is required" });
+  }
 
+  const query = "SELECT * FROM devotees WHERE zone = ?";
+  db.query(query, [zone], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: "⚠️ Error fetching devotees" });
+    }
+    res.status(200).json(result);
+  });
+});
+
+
+
+
+// 📌 API to Fetch Regular Pooja List Based on Selected Date
+app.get("/regular-pooja-list", (req, res) => {
+  const { date } = req.query;
+  if (!date) return res.status(400).json({ error: "Date is required" });
+
+  const query = `
+    SELECT pr.id, d.name, pr.pooja_name, DATE(pr.pooja_date) AS pooja_date, 
+           d.rashi, d.nakshatra, d.gotra
+    FROM PoojaRegistration pr
+    JOIN devotees d ON pr.devotee_id = d.id
+    WHERE DATE(pr.pooja_date) = ?;
+  `;
+
+  db.query(query, [date], (err, results) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(results);
+  });
+});
+
+ 
 
 // Start Server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+

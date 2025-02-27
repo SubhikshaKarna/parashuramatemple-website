@@ -1,202 +1,273 @@
-/* Main container */
-.p-4 {
-  width: 93%; /* Adjust width to leave space for a sidebar */
-  margin: auto;
-  background: #ffffff;
+/* === General Form Layout === */
+.formm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Fixed typo (100zvh → 100vh) */
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  overflow-x: auto; /* Prevents table overflow */
-
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers children horizontally */
-  justify-content: center; /* Centers children vertically */
-}
-
-
-.custom-input {
-  max-width: 50%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* General Button Styling */
-button {
-  width: 120px; /* Ensures all buttons have the same width */
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-/* Specific Button Colors */
-.bg-blue-500 {
+/* === Search Section === */
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.custom-input {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.search-button {
   background-color: rgb(96, 2, 2);
   color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.bg-green-500 {
+.search-button:hover {
+  background-color: rgb(75, 0, 0);
+}
+
+/* === Success Message === */
+.success-overlay {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: rgb(96, 2, 2);
   color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
 }
 
-.bg-yellow-500 {
-  background-color: rgb(96, 2, 2);
-  color: white;
+/* === Error Message === */
+.error-message {
+  color: red;
+  font-size: 1rem;
+  margin-top: 10px;
 }
 
-.bg-red-500 {
-  background-color: rgb(96, 2, 2);
-  color: white;
-}
-
-/* Button Hover Effects */
-button:hover {
-  opacity: 0.8;
-}
-
-/* Table Styling */
+/* === Table Styling === */
 .table-container {
-  width: 100%;
-  overflow-x: auto; /* Ensures table stays within container */
+  overflow-x: auto;
+  max-height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-table {
+.devotees-table {
   width: 100%;
-  margin-top: 20px;
   border-collapse: collapse;
-  background: #fff;
 }
 
-th, td {
+.devotees-table th, .devotees-table td {
   border: 1px solid #ddd;
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
-th {
-  background: #f4f4f4;
+.devotees-table th {
+  background-color: rgb(96, 2, 2);
+  color: white;
 }
 
-/* Expand row and column width when editing */
-.editing-row {
-  height: 60px;
+.multi-line-address {
+  white-space: pre-line;
 }
 
-.editing-row td {
-  padding: 15px;
+/* === Edit Button === */
+.edit-button {
+  background-color: rgb(96, 2, 2);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.editing-row input, 
-.editing-row select {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
+.edit-button:hover {
+  background-color: rgb(75, 0, 0);
 }
 
-/* Ensuring wider input fields while editing */
-.wider-column {
-  min-width: 250px;
-  max-width: 300px;
-  transition: width 0.3s ease-in-out;
-}
-
-/* Save & Cancel Button Container - Stack buttons vertically */
-.save-cancel-container {
-  display: flex;
-  flex-direction: column; /* Stack buttons one below the other */
-  align-items: center; /* Center the buttons */
-  gap: 10px; /* Space between buttons */
-}
-
-/* Popup Modal Styles */
+/* === Modal Overlay (Popup Background) === */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 20px;
 }
 
+/* === Modal Content (Popup Box) === */
 .modal-content {
+  width: 90%;
+  max-width: 600px;
   background: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow: hidden;
 }
 
-.modal-message {
-  font-size: 16px;
-  color: #d9534f; /* Red color for errors */
+/* === Scrollable Modal Body === */
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  overflow-y: auto;
+  max-height: 60vh;
+  padding-right: 10px;
+}
+
+/* === Close Button (Top Right) === */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  color: red;
+}
+
+/* === Modal Title === */
+.modal-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
   margin-bottom: 15px;
 }
 
-.modal-close-btn {
-  background: #333;
-  color: white;
-  padding: 8px 15px;
-  border: none;
+/* === Input Fields === */
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.modal-grid input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* === Modal Buttons (Save & Cancel) === */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.save-button {
+  background-color: rgb(96, 2, 2);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-.modal-close-btn:hover {
-  background: #555;
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-/* Responsive Design */
+.save-button:hover {
+  background-color: rgb(75, 0, 0);
+}
+
+.cancel-button:hover {
+  background-color: #b52b3b;
+}
+
+/* === Responsive Design === */
 @media (max-width: 768px) {
-  .p-4 {
+  /* Adjust modal grid to single column on small screens */
+  .modal-grid {
+    grid-template-columns: repeat(1, 1fr);
+    max-height: 50vh;
+  }
+
+  .modal-content {
+    max-width: 95%;
+    max-height: 75vh;
+  }
+
+  /* Buttons stack on small screens */
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .save-button, .cancel-button {
     width: 100%;
-    padding: 15px;
+    margin: 5px 0;
   }
 
-  input[type="text"],
-  input[type="date"],
-  select {
-    font-size: 16px;
-  }
-
-  table {
-    font-size: 14px;
-  }
-
-  th, td {
-    padding: 8px;
-  }
-
-  button {
-    width: 100%; /* Full width buttons on smaller screens */
-  }
-
-  .save-cancel-container {
-    flex-direction: row; /* Stack buttons side by side on small screens */
-  }
-}
-
-@media (max-width: 480px) {
-  th, td {
-    display: block;
-    width: 100%;
-  }
-
-  table {
-    display: block;
+  /* Table responsive adjustments */
+  .table-container {
+    max-height: 300px;
     overflow-x: auto;
   }
+
+  .devotees-table th, .devotees-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
 }
+
+.input-error {
+  border: 2px solid red !important;
+}
+
 

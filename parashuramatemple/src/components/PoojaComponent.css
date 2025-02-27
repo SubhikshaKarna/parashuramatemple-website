@@ -13,7 +13,7 @@
 /* Ensure responsiveness */
 @media (max-width: 500px) {
     .pooja-form-container {
-        max-width: 90%;
+        max-width: 80%;
         padding: 20px;
     }
 }
@@ -139,11 +139,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color:rgb(96, 2, 2);
     color: white;
     transition: background 0.3s ease-in-out;
   }
   
   .modal-content button:hover {
-    background-color: #0056b3;
+    background-color: rgb(96, 2, 2);
   }

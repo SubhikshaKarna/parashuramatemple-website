@@ -11,6 +11,8 @@ import DeleteDevotee from "./DeleteDevotee";
 import DeleteZone from "./DeleteZone"; 
 import DeletePooja from "./DeletePooja"; 
 import DeletePoojaRegistration from "./DeletePoojaRegistration"; 
+import FetchDevoteeDetails from "./FetchDevoteeDetails";
+import RegularPoojaList from "./RegularPoojaList"; // Import new component
 
 export const Dashboard = ({ userRole }) => {
   const [selectedOption, setSelectedOption] = useState("dashboard");
@@ -41,6 +43,10 @@ export const Dashboard = ({ userRole }) => {
         return <DeletePooja />;
       case "delete-pooja-registration":
         return <DeletePoojaRegistration />;
+      case "devotee-details":
+        return <FetchDevoteeDetails />;
+      case "regular-pooja-list":
+        return <RegularPoojaList />; // New case for regular pooja list
       case "dashboard":
       default:
         return (
@@ -56,6 +62,12 @@ export const Dashboard = ({ userRole }) => {
               <div className="dashboard-card" onClick={() => handleSelect("devotee-registration")}>
                 Devotee Registration / ಭಕ್ತರ ನೋಂದಣಿ
               </div>
+              <div className="dashboard-card" onClick={() => handleSelect("devotee-details")}>
+                Devotee Details / ಭಕ್ತರ ವಿವರಗಳು
+              </div>
+              <div className="dashboard-card" onClick={() => handleSelect("regular-pooja-list")}>
+                Regular Pooja List / ನಿಯಮಿತ ಪೂಜೆ ಪಟ್ಟಿ
+              </div>
             </div>
           </div>
         );
@@ -70,7 +82,7 @@ export const Dashboard = ({ userRole }) => {
           Dashboard / ಡ್ಯಾಶ್‌ಬೋರ್ಡ್
         </button>
         <button className={`sidebar-button ${selectedOption === "update-address" ? "active" : ""}`} onClick={() => handleSelect("update-address")}>
-        Update Details / ವಿವರಗಳನ್ನು ನವೀಕರಿಸಿ
+          Update Details / ವಿವರಗಳನ್ನು ನವೀಕರಿಸಿ
         </button>
         <button className={`sidebar-button ${selectedOption === "zone" ? "active" : ""}`} onClick={() => handleSelect("zone")}>
           Zone / ವಲಯ
