@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./DevoteesRegistrationForm.css";
 
 const DevoteesRegistrationForm = () => {
@@ -24,6 +24,7 @@ const DevoteesRegistrationForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [previewData, setPreviewData] = useState({});
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const firstInvalidRef = useRef(null);
 
   // Fetch zones from backend
   useEffect(() => {
@@ -48,16 +49,26 @@ const DevoteesRegistrationForm = () => {
   // Form validation
   const validateForm = () => {
     let newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required.";
-    if (!formData.parentName.trim()) newErrors.parentName = "Parent name is required.";
-    if (!formData.dob) newErrors.dob = "Date of birth is required.";
-    if (!formData.mobile.match(/^\d{10}$/)) newErrors.mobile = "Enter a valid 10-digit mobile number.";
-    if (!formData.email.match(/^\S+@\S+\.\S+$/)) newErrors.email = "Enter a valid email address.";
-    if (!formData.pincode.match(/^\d{6}$/)) newErrors.pincode = "Enter a valid 6-digit pincode.";
-    if (!formData.zone) newErrors.zone = "Please select a zone.";
+    if (!formData.name.trim()) newErrors.name = "";
+    if (!formData.parentName.trim()) newErrors.parentName = "";
+    if (!formData.dob) newErrors.dob = "";
+    if (!formData.mobile.match(/^\d{10}$/)) newErrors.mobile = "";
+    if (!formData.pincode.match(/^\d{6}$/)) newErrors.pincode = "";
+    if (!formData.zone) newErrors.zone = "";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    if (Object.keys(newErrors).length > 0) {
+      // Focus the first invalid input field
+      const firstInvalidField = Object.keys(newErrors)[0];
+      firstInvalidRef.current = document.getElementsByName(firstInvalidField)[0];
+      if (firstInvalidRef.current) {
+        firstInvalidRef.current.style.border = "2px solid red";
+        firstInvalidRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return false;
+    }
+    return true;
   };
 
   // Handle form submission
@@ -131,7 +142,7 @@ const DevoteesRegistrationForm = () => {
           ].map((field, index) => (
             <div key={index} className="form-group">
               <label>{field.label} {field.required && "*"}</label>
-              <input type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} />
+              <input type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} style={{ border: errors[field.name] ? "2px solid red" : "1px solid #ccc" }} />
               {errors[field.name] && <span className="error">{errors[field.name]}</span>}
             </div>
           ))}
@@ -139,7 +150,7 @@ const DevoteesRegistrationForm = () => {
           {/* Zone Dropdown */}
           <div className="form-group">
             <label>Zone (ವಲಯ) *</label>
-            <select name="zone" value={formData.zone} onChange={handleChange}>
+            <select name="zone" value={formData.zone} onChange={handleChange} style={{ border: errors.zone ? "2px solid red" : "1px solid #ccc" }}>
               <option value="">Select Zone</option>
               {zones.map((zone, index) => (
                 <option key={index} value={zone.name}>{zone.name}</option>

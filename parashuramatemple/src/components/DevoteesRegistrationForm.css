@@ -77,65 +77,8 @@ button[type="submit"]:hover {
   background-color: #6c1d1d;
 }
 
-/* Modal Container */
-.devotee-modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
 
-/* Modal Content */
-.devotee-modal-content {
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  position: relative;
-}
 
-/* Close Button */
-.close-modal-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #333;
-}
-
-.close-modal-btn:hover {
-  color: #6c1d1d;
-}
-
-/* Modal Body */
-.modal-body {
-  text-align: left;
-  margin: 15px 0;
-  font-size: 16px;
-}
-
-.modal-body p {
-  margin: 8px 0;
-}
-
-/* Modal Footer */
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
 
 .confirm-btn, .cancel-btn {
   flex: 1;
@@ -164,24 +107,65 @@ button[type="submit"]:hover {
   background-color: #aaa;
 }
 
-/* Success Modal */
-.success-modal h3 {
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal h3 {
   color: rgb(96, 2, 2);
 }
 
-.success-close-btn {
-  background-color: rgb(96, 2, 2);
-  color: white;
-  padding: 10px 20px;
+.modal button {
+  margin: 10px;
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
 }
 
-.success-close-btn:hover {
+.modal button:first-child {
+  background-color: rgb(96, 2, 2);
+  color: white;
+}
+
+.modal button:first-child:hover {
+  background-color: #6c1d1d;
+}
+
+.modal button:last-child {
   background-color: rgb(96, 2, 2);
 }
+
+.modal button:last-child:hover {
+  background-color: rgb(96, 2, 2);
+}
+
+/* Modal Background */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
 
 /* Responsive Design */
 @media (max-width: 500px) {
