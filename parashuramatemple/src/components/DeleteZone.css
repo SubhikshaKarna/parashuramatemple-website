@@ -118,13 +118,14 @@
     font-size: 14px; /* Smaller font size */
 }
 
-.modal-btn {
+.modal-btnn {
     margin: 5px;
     padding: 8px 12px;
     font-size: 12px;  /* Smaller button font size */
     border-radius: 5px;
     cursor: pointer;
 }
+
 
 .modal-btn:first-child {
     background-color: rgb(96, 2, 2);
@@ -155,6 +156,7 @@
     font-size: 18px;
     color: #333;
     cursor: pointer;
+    width: 100%;
 }
 
 .close-btn:hover {

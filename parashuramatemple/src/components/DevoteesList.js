@@ -178,7 +178,7 @@ const DevoteesList = () => {
           ReactDOM.createPortal(
             <div className="modal-overlay">
               <div className="modal-content">
-                <button onClick={handleCancel} className="close-button">
+                <button onClick={handleCancel} className="custom-close-button">
                   &times;
                 </button>
                 <h3 className="modal-title">Edit Devotee</h3>

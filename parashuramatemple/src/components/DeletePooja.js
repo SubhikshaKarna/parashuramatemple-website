@@ -106,7 +106,7 @@ const DeletePooja = () => {
             <p>Are you sure you want to delete this pooja name?</p>
             <div className="modal-actions">
               <button className="modal-btn" onClick={handleDeletePoojaName}>Yes</button>
-              <button className="modal-btn" onClick={closeModal}>No</button>
+              <button className="modal-btnn" onClick={closeModal}>No</button>
             </div>
           </div>
         </div>

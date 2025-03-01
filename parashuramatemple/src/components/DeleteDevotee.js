@@ -106,7 +106,7 @@ const DeleteDevotee = () => {
             <p>Are you sure you want to delete this devotee?</p>
             <div className="modal-actions">
               <button className="modal-btn" onClick={handleDeleteDevotee}>Yes</button>
-              <button className="modal-btn" onClick={closeModal}>No</button>
+              <button className="modal-btnn" onClick={closeModal}>No</button>
             </div>
           </div>
         </div>

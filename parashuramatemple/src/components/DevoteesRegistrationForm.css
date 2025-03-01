@@ -60,7 +60,13 @@ input[type="date"] {
   margin-top: 5px;
 }
 
-/* Submit Button */
+/* Center the Submit Button */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 button[type="submit"] {
   background-color: rgb(96, 2, 2);
   color: white;
@@ -70,8 +76,10 @@ button[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 100%;
+  width: 50%;
+  text-align: center;
 }
+
 
 button[type="submit"]:hover {
   background-color: #6c1d1d;
@@ -178,14 +186,16 @@ button[type="submit"]:hover {
     margin: 5px 0;
   }
 }
-
+/* Error Styling */
 .error-border {
-  border: 2px solid rgb(123, 5, 5);
-  box-shadow: 0 0 5px rgb(86, 2, 2); /* Adds a red glow effect */
+  border: 2px solid rgba(150, 0, 0, 0.9);
+  box-shadow: 0 0 8px rgba(150, 0, 0, 0.9), 0 0 12px rgba(150, 0, 0, 0.7);
+  transition: all 0.3s ease-in-out;
 }
 
 .error {
-  color: rgb(128, 12, 12);
+  color: rgba(150, 0, 0, 0.9);
   font-size: 0.8em;
-  text-shadow: 1px 1px 2px rgba
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(128, 12, 12, 0.8);
 }

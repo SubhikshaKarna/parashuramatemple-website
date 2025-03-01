@@ -115,11 +115,17 @@ button {
 .modal-body-unique {
   max-height: 400px;
   overflow-y: auto;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  text-align: center; /* Ensures text inside is centered */
 }
+
 
 .modal-footer-unique {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;  /* Centers the button horizontally */
+  align-items: center;  /* Centers the button vertically */
   margin-top: 20px;
 }
 

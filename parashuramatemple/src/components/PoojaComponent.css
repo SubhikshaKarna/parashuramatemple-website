@@ -73,7 +73,7 @@
 .pooja-form-container button:hover {
     background: #e4ae5c;
     color: white;
-    transform: scale(1.07);
+    transform: scale(1);
 }
 
 .pooja-form-container button:active {
@@ -102,10 +102,14 @@
   .modal-content {
     background: #fff;
     padding: 20px;
-    width: 300px;
+    width: 250px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center
+
   }
   
   .modal-content h3 {
@@ -115,11 +119,11 @@
   
   /* Success modal */
   .modal-content.success-modal {
-    border-left: 5px solid #28a745;
+    border-left: 5px solid rgb(96, 2, 2);
   }
   
   .modal-content.success-modal h3 {
-    color: #28a745;
+    color: rgb(96, 2, 2);
   }
   
   /* Error modal */
@@ -142,6 +146,7 @@
     background-color:rgb(96, 2, 2);
     color: white;
     transition: background 0.3s ease-in-out;
+    width: 50%;
   }
   
   .modal-content button:hover {

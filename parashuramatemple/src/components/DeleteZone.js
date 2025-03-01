@@ -106,7 +106,7 @@ const DeleteZone = () => {
             <p>Are you sure you want to delete this zone?</p>
             <div className="modal-actions">
               <button className="modal-btn" onClick={handleDeleteZone}>Yes</button>
-              <button className="modal-btn" onClick={closeModal}>No</button>
+              <button className="modal-btnn" onClick={closeModal}>No</button>
             </div>
           </div>
         </div>

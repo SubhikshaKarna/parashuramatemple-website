@@ -26,6 +26,7 @@
   gap: 10px;
   margin-bottom: 20px;
   align-items: center;
+  
 }
 
 .custom-input {
@@ -271,3 +272,50 @@
 }
 
 
+
+.custom-close-button {
+  position: absolute;
+  top: 6px;
+  right: 40px;
+  background-color: #ff4d4d; /* Red color */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px; /* Adjusted for responsiveness */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  max-width:8%;/* Prevents oversized button */
+  max-height:7%;
+  text-align: center;
+}
+
+.custom-close-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Ensure modal-content is relatively positioned */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative; /* Ensures button stays inside */
+  width: 90%; /* Make modal width flexible */
+  max-width: 400px; /* Prevents excessive width */
+  text-align: center;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 480px) {
+  .custom-close-button {
+    font-size: 12px;
+    padding: 6px 10px;
+    min-width: 35px;
+  }
+
+  .modal-content {
+    width: 95%; /* More width flexibility on small screens */
+    max-width: 350px;
+  }
+}

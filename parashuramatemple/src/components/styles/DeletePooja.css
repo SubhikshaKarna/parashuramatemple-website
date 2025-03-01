@@ -118,25 +118,26 @@
   font-size: 14px; /* Smaller font size */
 }
 
-.modal-btn {
+.modal-btnn {
   margin: 5px;
   padding: 8px 12px;
   font-size: 12px;  /* Smaller button font size */
   border-radius: 5px;
   cursor: pointer;
+  width: 100%;
 }
 
 .modal-btn:first-child {
   background-color: rgb(96, 2, 2);
   color: white;
+
 }
 
 .modal-btn:last-child {
   background-color: transparent;
   color: #333;
-  font-size: 18px; /* Larger size for the 'X' */
+  font-size: 12px; /* Larger size for the 'X' */
   border: none;
-  padding: 0;
 }
 
 .modal-btn:hover {
@@ -155,6 +156,7 @@
   font-size: 18px;
   color: rgb(96, 2, 2);
   cursor: pointer;
+  width: 100%;
 }
 
 .close-btn:hover {

@@ -217,13 +217,13 @@ button:hover {
 
 .error-border {
   border: 2px solid rgb(146, 3, 3); /* Red border */
-  box-shadow: 0 0 5px rgba(85, 2, 2, 0.8); /* Red shadow */
+  box-shadow: 0 0 5px rgba(85, 2, 2, 0.5); /* Red shadow */
 }
 
 /* Additional styling for input[type="date"] */
 input[type="date"].error-border {
   border: 2px solid  rgb(146, 3, 3) !important;
-  box-shadow: 0 0 5px 2px rgba(85, 2, 2, 0.8) !important;
+  box-shadow: 0 0 5px 2px rgba(85, 2, 2, 0.5) !important;
 }
 
 

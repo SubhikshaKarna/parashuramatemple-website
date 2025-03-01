@@ -40,11 +40,17 @@ const DevoteesRegistrationForm = () => {
     fetchZones();
   }, []);
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  
+    // Remove red border once a value is entered
+    if (value.trim() !== "") {
+      e.target.style.border = "1px solid #ccc"; // Reset border color
+    }
   };
+  
+  
 
   // Form validation
   const validateForm = () => {
@@ -55,6 +61,7 @@ const DevoteesRegistrationForm = () => {
     if (!formData.mobile.match(/^\d{10}$/)) newErrors.mobile = "";
     if (!formData.pincode.match(/^\d{6}$/)) newErrors.pincode = "";
     if (!formData.zone) newErrors.zone = "";
+    if (!formData.address1.trim()) newErrors.address1 = "";
 
     setErrors(newErrors);
 
@@ -124,64 +131,93 @@ const DevoteesRegistrationForm = () => {
   };
 
   return (
-    <div className="devotees-form-container">
-      <h2>Devotees Registration(ಭಕ್ತರ ನೋಂದಣಿ)</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-grid">
-          {/* Form Fields */}
-          {[
-            { label: "Name (ಹೆಸರು)", name: "name", type: "text", required: true },
-            { label: "Father/Mother Name (ತಂದೆ/ತಾಯಿ ಹೆಸರು)", name: "parentName", type: "text", required: true },
-            { label: "Date of Birth (ಜನ್ಮ ದಿನಾಂಕ)", name: "dob", type: "date", required: true },
-            { label: "Mobile No (ಮೊಬೈಲ್ ಸಂಖ್ಯೆ)", name: "mobile", type: "text", required: true },
-            { label: "Email (ಇಮೇಲ್)", name: "email", type: "email", required: true },
-            { label: "Pincode (ಪಿನ್ ಕೋಡ್)", name: "pincode", type: "text", required: true },
-            { label: "Rashi (ರಾಶಿ)", name: "rashi", type: "text" },
-            { label: "Nakshatra (ನಕ್ಷತ್ರ)", name: "nakshatra", type: "text" },
-            { label: "Gotra (ಗೋತ್ರ)", name: "gotra", type: "text" },
-          ].map((field, index) => (
-            <div key={index} className="form-group">
-              <label>{field.label} {field.required && "*"}</label>
-              <input type={field.type} name={field.name} value={formData[field.name]} onChange={handleChange} style={{ border: errors[field.name] ? "2px solid red" : "1px solid #ccc" }} />
-              {errors[field.name] && <span className="error">{errors[field.name]}</span>}
-            </div>
-          ))}
+      <div className="devotees-form-container">
+        <h2>Devotees Registration(ಭಕ್ತರ ನೋಂದಣಿ)</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-grid">
+            {/* Form Fields */}
+            {[
+              { label: "Name (ಹೆಸರು)", name: "name", type: "text", required: true },
+              { label: "Father/Mother Name (ತಂದೆ/ತಾಯಿ ಹೆಸರು)", name: "parentName", type: "text", required: true },
+              { label: "Date of Birth (ಜನ್ಮ ದಿನಾಂಕ)", name: "dob", type: "date", required: true },
+              { label: "Mobile No (ಮೊಬೈಲ್ ಸಂಖ್ಯೆ)", name: "mobile", type: "text", required: true },
+              { label: "Email (ಇಮೇಲ್)", name: "email", type: "email" },
+              { label: "Pincode (ಪಿನ್ ಕೋಡ್)", name: "pincode", type: "text", required: true },
+              { label: "Rashi (ರಾಶಿ)", name: "rashi", type: "text" },
+              { label: "Nakshatra (ನಕ್ಷತ್ರ)", name: "nakshatra", type: "text" },
+              { label: "Gotra (ಗೋತ್ರ)", name: "gotra", type: "text" },
+            ].map((field, index) => (
+              <div key={index} className="form-group">
+                <label>{field.label} {field.required && "*"}</label>
+                <input 
+                  type={field.type} 
+                  name={field.name} 
+                  value={formData[field.name]} 
+                  onChange={handleChange} 
+                  className={errors[field.name] ? "error-border" : ""}
+                />
+                {errors[field.name] && <span className="error">{errors[field.name]}</span>}
+              </div>
+            ))}
 
-          {/* Zone Dropdown */}
-          <div className="form-group">
-            <label>Zone (ವಲಯ) *</label>
-            <select name="zone" value={formData.zone} onChange={handleChange} style={{ border: errors.zone ? "2px solid red" : "1px solid #ccc" }}>
-              <option value="">Select Zone</option>
-              {zones.map((zone, index) => (
-                <option key={index} value={zone.name}>{zone.name}</option>
-              ))}
-            </select>
-            {errors.zone && <span className="error">{errors.zone}</span>}
+            {/* Zone Dropdown */}
+            <div className="form-group">
+              <label>Zone (ವಲಯ) *</label>
+              <select 
+                name="zone" 
+                value={formData.zone} 
+                onChange={handleChange} 
+                className={errors.zone ? "error-border" : ""}
+              >
+                <option value="">Select Zone</option>
+                {zones.map((zone, index) => (
+                  <option key={index} value={zone.name}>{zone.name}</option>
+                ))}
+              </select>
+              {errors.zone && <span className="error">{errors.zone}</span>}
+            </div>
+
+            {/* Address Fields */}
+            {[1, 2, 3, 4].map((num) => (
+              <div key={num} className="form-group">
+                <label>Address Line {num} {num === 1 && "*"}</label>
+                <input 
+                  type="text" 
+                  name={`address${num}`} 
+                  value={formData[`address${num}`]} 
+                  onChange={handleChange} 
+                  className={num === 1 && errors.address1 ? "error-border" : ""}
+                />
+                {num === 1 && errors.address1 && <span className="error">{errors.address1}</span>}
+              </div>
+            ))}
           </div>
 
-          {/* Address Fields */}
-          {[1, 2, 3, 4].map((num) => (
-            <div key={num} className="form-group">
-              <label>Address Line {num}</label>
-              <input type="text" name={`address${num}`} value={formData[`address${num}`]} onChange={handleChange} />
-            </div>
-          ))}
-        </div>
+          {/* Submit Button */}
+          <div className="button-container">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
 
-        <button type="submit">Submit</button>
-      </form>
+
 
       {/* Preview Modal */}
       {isModalOpen && (
         <div className="modal">
           <h3>Review Your Information</h3>
-          {Object.entries(previewData).map(([key, value]) => (
-            <p key={key}><strong>{key}:</strong> {value}</p>
-          ))}
+          {Object.entries(previewData).map(([key, value]) => {
+            if (key.startsWith("address") && key !== "address") return null; // Skip individual address lines
+            return (
+              <p key={key}>
+                <strong>{key}:</strong> {value}
+              </p>
+            );
+          })}
           <button onClick={handleConfirmSubmission}>Confirm</button>
           <button onClick={() => setIsModalOpen(false)}>Cancel</button>
         </div>
       )}
+
 
       {/* Success Modal */}
       {isSuccessModalOpen && (
