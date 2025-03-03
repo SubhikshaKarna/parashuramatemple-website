@@ -1,12 +1,13 @@
-/* === General Form Layout === */
 .formm {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Fixed typo (100zvh → 100vh) */
+  height: 100vh;
   background-color: #f8f9fa;
   padding: 10px;
+  margin-top: -100px; /* Moves it higher */
 }
+
 
 .container {
   width: 90%;
