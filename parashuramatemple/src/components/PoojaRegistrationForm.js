@@ -1,28 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './PoojaRegistrationForm.css';
-document.addEventListener("DOMContentLoaded", function () {
-  const popup = document.querySelector(".pooja--popup");
-  const overlay = document.querySelector(".pooja--overlay");
-  const closeButton = document.querySelector(".pooja--close--button");
-  const previewButton = document.querySelector(".pooja--preview--button");
-
-  // Function to show popup and overlay
-  function showPopup() {
-    popup.classList.add("show");
-    overlay.style.display = "block";
-  }
-
-  // Function to hide popup and overlay
-  function closePopup() {
-    popup.classList.remove("show");
-    overlay.style.display = "none";
-  }
-
-  // Attach event listeners
-  previewButton.addEventListener("click", showPopup);
-  closeButton.addEventListener("click", closePopup);
-});
 
 const PoojaRegistrationForm = () => {
   const [devoteeName, setDevoteeName] = useState("");
@@ -56,7 +34,6 @@ const PoojaRegistrationForm = () => {
       .catch((error) => console.error("Error fetching pooja names:", error));
   }, []);
 
-  
   const handleDevoteeSearch = (query) => {
     setDevoteeName(query);
     if (query.length > 1) {

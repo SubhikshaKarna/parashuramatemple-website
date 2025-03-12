@@ -491,20 +491,24 @@ app.get("/get-devotees", (req, res) => {
 
 
 
-// 📌 API to Fetch Regular Pooja List Based on Selected Date
+// 📌 API to Fetch Regular Pooja List Based on Date Range
 app.get("/regular-pooja-list", (req, res) => {
-  const { date } = req.query;
-  if (!date) return res.status(400).json({ error: "Date is required" });
+  const { start_date, end_date } = req.query;
+
+  // Validate input
+  if (!start_date || !end_date) {
+    return res.status(400).json({ error: "Start date and end date are required" });
+  }
 
   const query = `
     SELECT pr.id, d.name, pr.pooja_name, DATE(pr.pooja_date) AS pooja_date, 
            d.rashi, d.nakshatra, d.gotra
     FROM PoojaRegistration pr
     JOIN devotees d ON pr.devotee_id = d.id
-    WHERE DATE(pr.pooja_date) = ?;
+    WHERE DATE(pr.pooja_date) BETWEEN ? AND ?;
   `;
 
-  db.query(query, [date], (err, results) => {
+  db.query(query, [start_date, end_date], (err, results) => {
     if (err) {
       console.error("Error fetching data:", err);
       return res.status(500).json({ error: err.message });
@@ -512,6 +516,7 @@ app.get("/regular-pooja-list", (req, res) => {
     res.json(results);
   });
 });
+
 
  
 

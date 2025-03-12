@@ -113,13 +113,12 @@ button {
 }
 
 .modal-body-unique {
-  max-height: 400px;
-  overflow-y: auto;
-  display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  text-align: center; /* Ensures text inside is centered */
+  max-height: 400px;  /* Limit height to enable scrolling */
+  overflow-y: auto;   /* Enable vertical scrolling */
+  text-align: center;  /* Center content */
+  padding: 10px;
 }
+
 
 
 .modal-footer-unique {

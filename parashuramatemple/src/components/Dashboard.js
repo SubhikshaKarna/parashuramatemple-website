@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/Dashboard.css";
 import Header from "./Header";
 import PoojaComponent from "./PoojaComponent";
@@ -12,14 +12,26 @@ import DeleteZone from "./DeleteZone";
 import DeletePooja from "./DeletePooja"; 
 import DeletePoojaRegistration from "./DeletePoojaRegistration"; 
 import FetchDevoteeDetails from "./FetchDevoteeDetails";
-import RegularPoojaList from "./RegularPoojaList"; // Import new component
+import RegularPoojaList from "./RegularPoojaList"; 
 
 export const Dashboard = ({ userRole }) => {
-  const [selectedOption, setSelectedOption] = useState("dashboard");
+  // Load selected option from localStorage if available
+  const [selectedOption, setSelectedOption] = useState(
+    localStorage.getItem("selectedOption") || "dashboard"
+  );
 
   const handleSelect = (option) => {
     setSelectedOption(option);
+    localStorage.setItem("selectedOption", option); // Store in localStorage
   };
+
+  useEffect(() => {
+    // Ensure selected option is always loaded from storage
+    const storedOption = localStorage.getItem("selectedOption");
+    if (storedOption) {
+      setSelectedOption(storedOption);
+    }
+  }, []);
 
   const renderContent = () => {
     switch (selectedOption) {
@@ -46,7 +58,7 @@ export const Dashboard = ({ userRole }) => {
       case "devotee-details":
         return <FetchDevoteeDetails />;
       case "regular-pooja-list":
-        return <RegularPoojaList />; // New case for regular pooja list
+        return <RegularPoojaList />;
       case "dashboard":
       default:
         return (
@@ -57,13 +69,13 @@ export const Dashboard = ({ userRole }) => {
                 Pooja Registration / ಪೂಜೆ ನೋಂದಣಿ
               </div>
               <div className="dashboard-card" onClick={() => handleSelect("FetchPoojaRegistration")}>
-                Pooja Details / ಪೂಜಾ ವಿವರಗಳು
+                Pooja Details(Date) / ಪೂಜಾ ವಿವರಗಳು
               </div>
               <div className="dashboard-card" onClick={() => handleSelect("devotee-registration")}>
                 Devotee Registration / ಭಕ್ತರ ನೋಂದಣಿ
               </div>
               <div className="dashboard-card" onClick={() => handleSelect("devotee-details")}>
-                Devotee Details / ಭಕ್ತರ ವಿವರಗಳು
+                Devotee Details(Zone)/ ಭಕ್ತರ ವಿವರಗಳು
               </div>
               <div className="dashboard-card" onClick={() => handleSelect("regular-pooja-list")}>
                 Regular Pooja List / ನಿಯಮಿತ ಪೂಜೆ ಪಟ್ಟಿ

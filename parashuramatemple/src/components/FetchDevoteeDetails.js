@@ -113,7 +113,6 @@ const FetchDevoteeDetails = () => {
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
-              <h3>Devotee Details</h3>
             </div>
             <div className="modal-body">
               <table border="1">
@@ -139,9 +138,9 @@ const FetchDevoteeDetails = () => {
             </div>
             <div className="modal-footer">
               <button className="download-button" onClick={downloadPDF}>
-                Download PDF
+                Download
               </button>
-              <button className="close-button" onClick={() => setIsDataPopupOpen(false)}>
+              <button className="close-buttonn" onClick={() => setIsDataPopupOpen(false)}>
                 Close
               </button>
             </div>
@@ -151,22 +150,24 @@ const FetchDevoteeDetails = () => {
 
       {/* Modal for No Data */}
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3>No Data Found</h3>
-            </div>
-            <div className="modal-body">
-              <p>{noDataMessage}</p>
-            </div>
-            <div className="modal-footer">
-              <button className="close-button" onClick={() => setIsModalOpen(false)}>
-                Close
-              </button>
-            </div>
+      <div className="overlay-popup">
+        <div className="content-popup">
+          <div className="header-popup">
+            <h3>No Data Found</h3>
+            <button className="nameclose-pop" onClick={() => setIsModalOpen(false)}>×</button>
+          </div>
+          <div className="body-popup">
+            <p>{noDataMessage}</p>
+          </div>
+          <div className="footer-popup">
+            <button className="nameclose-pop" onClick={() => setIsModalOpen(false)}>
+              Close
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    )}
+
     </div>
   );
 };

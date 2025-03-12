@@ -91,10 +91,10 @@ const DeleteZone = () => {
 
       {/* Success message popup */}
       {showSuccessPopup && (
-        <div className="confirm-modal">
-          <div className="modal-content">
+        <div className="deleted-popup">
+          <div className="deleted-content">
             <p>Zone deleted successfully!</p>
-            <button className="modal-btn" onClick={closeSuccessPopup}>OK</button>
+            <button className="deleted-btn" onClick={closeSuccessPopup}>OK</button>
           </div>
         </div>
       )}
