@@ -126,7 +126,7 @@ app.post("/register-devotee", (req, res) => {
   const { 
     name, parentName, dob, mobile, email, pincode, zone, 
     address1, address2, address3, address4, 
-    rashi, nakshatra, gotra 
+    rashi, nakshatra, gotra, headOfHouse // Added headOfHouse
   } = req.body;
 
   if (!name || !parentName || !dob || !mobile || !pincode || !zone) {
@@ -144,11 +144,11 @@ app.post("/register-devotee", (req, res) => {
   const fullAddress = [address1, address2, address3, address4].filter(Boolean).join(", ");
 
   const query = `
-    INSERT INTO devotees (name, parent_name, dob, mobile, email, pincode, address, zone, rashi, nakshatra, gotra)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO devotees (name, parent_name, dob, mobile, email, pincode, address, zone, rashi, nakshatra, gotra, head_of_house)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(query, [name, parentName, dob, mobile, email, pincode, fullAddress, zone, rashi, nakshatra, gotra], (err, result) => {
+  db.query(query, [name, parentName, dob, mobile, email, pincode, fullAddress, zone, rashi, nakshatra, gotra, headOfHouse], (err, result) => {
     if (err) {
       if (err.code === "ER_DUP_ENTRY") {
         return res.status(400).json({ error: "⚠️ Mobile number or email already exists" });
@@ -479,7 +479,7 @@ app.get("/get-devotees", (req, res) => {
     return res.status(400).json({ error: "⚠️ Zone parameter is required" });
   }
 
-  const query = "SELECT * FROM devotees WHERE zone = ?";
+  const query = "SELECT * FROM devotees WHERE head_of_house='yes' and  zone = ?";
   db.query(query, [zone], (err, result) => {
     if (err) {
       return res.status(500).json({ error: "⚠️ Error fetching devotees" });

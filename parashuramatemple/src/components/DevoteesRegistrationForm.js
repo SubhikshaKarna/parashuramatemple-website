@@ -17,6 +17,7 @@ const DevoteesRegistrationForm = () => {
     rashi: "",
     nakshatra: "",
     gotra: "",
+    headOfHouse: "NO", // Toggle switch default
   });
 
   const [errors, setErrors] = useState({});
@@ -26,7 +27,6 @@ const DevoteesRegistrationForm = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const firstInvalidRef = useRef(null);
 
-  // Fetch zones from backend
   useEffect(() => {
     const fetchZones = async () => {
       try {
@@ -43,16 +43,19 @@ const DevoteesRegistrationForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  
-    // Remove red border once a value is entered
+
     if (value.trim() !== "") {
-      e.target.style.border = "1px solid #ccc"; // Reset border color
+      e.target.style.border = "1px solid #ccc";
     }
   };
-  
-  
 
-  // Form validation
+  const handleToggle = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      headOfHouse: prevData.headOfHouse === "NO" ? "YES" : "NO",
+    }));
+  };
+
   const validateForm = () => {
     let newErrors = {};
     if (!formData.name.trim()) newErrors.name = "";
@@ -66,7 +69,6 @@ const DevoteesRegistrationForm = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      // Focus the first invalid input field
       const firstInvalidField = Object.keys(newErrors)[0];
       firstInvalidRef.current = document.getElementsByName(firstInvalidField)[0];
       if (firstInvalidRef.current) {
@@ -78,7 +80,6 @@ const DevoteesRegistrationForm = () => {
     return true;
   };
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
@@ -86,11 +87,10 @@ const DevoteesRegistrationForm = () => {
       const formDataToSend = { ...formData, address: fullAddress };
 
       setPreviewData(formDataToSend);
-      setIsModalOpen(true); // Open the preview modal
+      setIsModalOpen(true);
     }
   };
 
-  // Confirm Submission
   const handleConfirmSubmission = async () => {
     try {
       const response = await fetch("http://localhost:5000/register-devotee", {
@@ -119,6 +119,7 @@ const DevoteesRegistrationForm = () => {
           rashi: "",
           nakshatra: "",
           gotra: "",
+          headOfHouse: "NO", 
         });
         setIsModalOpen(false);
       } else {
@@ -131,73 +132,81 @@ const DevoteesRegistrationForm = () => {
   };
 
   return (
-      <div className="devotees-form-container">
-        <h2>Devotees Registration(ಭಕ್ತರ ನೋಂದಣಿ)</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-grid">
-            {/* Form Fields */}
-            {[
-              { label: "Name (ಹೆಸರು)", name: "name", type: "text", required: true },
-              { label: "Father/Mother Name (ತಂದೆ/ತಾಯಿ ಹೆಸರು)", name: "parentName", type: "text", required: true },
-              { label: "Date of Birth (ಜನ್ಮ ದಿನಾಂಕ)", name: "dob", type: "date", required: true },
-              { label: "Mobile No (ಮೊಬೈಲ್ ಸಂಖ್ಯೆ)", name: "mobile", type: "text", required: true },
-              { label: "Email (ಇಮೇಲ್)", name: "email", type: "email" },
-              { label: "Pincode (ಪಿನ್ ಕೋಡ್)", name: "pincode", type: "text", required: true },
-              { label: "Rashi (ರಾಶಿ)", name: "rashi", type: "text" },
-              { label: "Nakshatra (ನಕ್ಷತ್ರ)", name: "nakshatra", type: "text" },
-              { label: "Gotra (ಗೋತ್ರ)", name: "gotra", type: "text" },
-            ].map((field, index) => (
-              <div key={index} className="form-group">
-                <label>{field.label} {field.required && "*"}</label>
-                <input 
-                  type={field.type} 
-                  name={field.name} 
-                  value={formData[field.name]} 
-                  onChange={handleChange} 
-                  className={errors[field.name] ? "error-border" : ""}
-                />
-                {errors[field.name] && <span className="error">{errors[field.name]}</span>}
-              </div>
-            ))}
-
-            {/* Zone Dropdown */}
-            <div className="form-group">
-              <label>Zone (ವಲಯ) *</label>
-              <select 
-                name="zone" 
-                value={formData.zone} 
+    <div className="devotees-form-container">
+      <h2>Devotees Registration(ಭಕ್ತರ ನೋಂದಣಿ)</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-grid">
+          {[
+            { label: "Name (ಹೆಸರು)", name: "name", type: "text", required: true },
+            { label: "Father/Mother Name (ತಂದೆ/ತಾಯಿ ಹೆಸರು)", name: "parentName", type: "text", required: true },
+            { label: "Date of Birth (ಜನ್ಮ ದಿನಾಂಕ)", name: "dob", type: "date", required: true },
+            { label: "Mobile No (ಮೊಬೈಲ್ ಸಂಖ್ಯೆ)", name: "mobile", type: "text", required: true },
+            { label: "Email (ಇಮೇಲ್)", name: "email", type: "email" },
+            { label: "Pincode (ಪಿನ್ ಕೋಡ್)", name: "pincode", type: "text", required: true },
+            { label: "Rashi (ರಾಶಿ)", name: "rashi", type: "text" },
+            { label: "Nakshatra (ನಕ್ಷತ್ರ)", name: "nakshatra", type: "text" },
+            { label: "Gotra (ಗೋತ್ರ)", name: "gotra", type: "text" },
+          ].map((field, index) => (
+            <div key={index} className="form-group">
+              <label>{field.label} {field.required && "*"}</label>
+              <input 
+                type={field.type} 
+                name={field.name} 
+                value={formData[field.name]} 
                 onChange={handleChange} 
-                className={errors.zone ? "error-border" : ""}
-              >
-                <option value="">Select Zone</option>
-                {zones.map((zone, index) => (
-                  <option key={index} value={zone.name}>{zone.name}</option>
-                ))}
-              </select>
-              {errors.zone && <span className="error">{errors.zone}</span>}
+                className={errors[field.name] ? "error-border" : ""}
+              />
+              {errors[field.name] && <span className="error">{errors[field.name]}</span>}
             </div>
+          ))}
 
-            {/* Address Fields */}
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="form-group">
-                <label>Address Line {num} {num === 1 && "*"}</label>
-                <input 
-                  type="text" 
-                  name={`address${num}`} 
-                  value={formData[`address${num}`]} 
-                  onChange={handleChange} 
-                  className={num === 1 && errors.address1 ? "error-border" : ""}
-                />
-                {num === 1 && errors.address1 && <span className="error">{errors.address1}</span>}
-              </div>
-            ))}
+          <div className="form-group">
+            <label>Zone (ವಲಯ) *</label>
+            <select 
+              name="zone" 
+              value={formData.zone} 
+              onChange={handleChange} 
+              className={errors.zone ? "error-border" : ""}
+            >
+              <option value="">Select Zone</option>
+              {zones.map((zone, index) => (
+                <option key={index} value={zone.name}>{zone.name}</option>
+              ))}
+            </select>
+            {errors.zone && <span className="error">{errors.zone}</span>}
           </div>
 
-          {/* Submit Button */}
-          <div className="button-container">
-            <button type="submit">Submit</button>
+          {[1, 2, 3, 4].map((num) => (
+            <div key={num} className="form-group">
+              <label>Address Line {num} {num === 1 && "*"}</label>
+              <input 
+                type="text" 
+                name={`address${num}`} 
+                value={formData[`address${num}`]} 
+                onChange={handleChange} 
+                className={num === 1 && errors.address1 ? "error-border" : ""}
+              />
+              {num === 1 && errors.address1 && <span className="error">{errors.address1}</span>}
+            </div>
+          ))}
+
+          <div className="form-group">
+            <label>Head of the House (ಗೃಹ ಮುಖ್ಯಸ್ಥ)</label>
+            <div className="switch-container">
+              <label className="switch">
+                <input type="checkbox" checked={formData.headOfHouse === "YES"} onChange={handleToggle} />
+                <span className="slider round"></span>
+              </label>
+              <span className="switch-label">{formData.headOfHouse === "YES" ? "YES" : "NO"}</span>
+            </div>
           </div>
-        </form>
+
+        </div>
+
+        <div className="button-container">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
 
 
 

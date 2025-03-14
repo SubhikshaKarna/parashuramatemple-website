@@ -14,25 +14,23 @@ import DeletePoojaRegistration from "./DeletePoojaRegistration";
 import FetchDevoteeDetails from "./FetchDevoteeDetails";
 import RegularPoojaList from "./RegularPoojaList"; 
 
-export const Dashboard = ({ userRole }) => {
-  // Load selected option from localStorage if available
+export const Dashboard = ({ userRole, onLogout }) => {
   const [selectedOption, setSelectedOption] = useState(
     localStorage.getItem("selectedOption") || "dashboard"
   );
 
   const handleSelect = (option) => {
     setSelectedOption(option);
-    localStorage.setItem("selectedOption", option); // Store in localStorage
+    localStorage.setItem("selectedOption", option);
   };
 
   useEffect(() => {
-    // Ensure selected option is always loaded from storage
     const storedOption = localStorage.getItem("selectedOption");
-    if (storedOption) {
-      setSelectedOption(storedOption);
+    if (!storedOption) {
+      setSelectedOption("dashboard");
     }
   }, []);
-
+  
   const renderContent = () => {
     switch (selectedOption) {
       case "pooja-registration":
@@ -75,10 +73,13 @@ export const Dashboard = ({ userRole }) => {
                 Devotee Registration / ಭಕ್ತರ ನೋಂದಣಿ
               </div>
               <div className="dashboard-card" onClick={() => handleSelect("devotee-details")}>
-                Devotee Details(Zone)/ ಭಕ್ತರ ವಿವರಗಳು
+                Devotee Details(Zone) / ಭಕ್ತರ ವಿವರಗಳು
               </div>
               <div className="dashboard-card" onClick={() => handleSelect("regular-pooja-list")}>
                 Regular Pooja List / ನಿಯಮಿತ ಪೂಜೆ ಪಟ್ಟಿ
+              </div>
+              <div className="dashboard-card" onClick={() => handleSelect("update-address")}>
+                Update Details / ವಿವರಗಳನ್ನು ನವೀಕರಿಸಿ
               </div>
             </div>
           </div>
@@ -92,9 +93,6 @@ export const Dashboard = ({ userRole }) => {
         <h2 className="sidebar-title">Menu / ಮೆನು</h2>
         <button className={`sidebar-button ${selectedOption === "dashboard" ? "active" : ""}`} onClick={() => handleSelect("dashboard")}>
           Dashboard / ಡ್ಯಾಶ್‌ಬೋರ್ಡ್
-        </button>
-        <button className={`sidebar-button ${selectedOption === "update-address" ? "active" : ""}`} onClick={() => handleSelect("update-address")}>
-          Update Details / ವಿವರಗಳನ್ನು ನವೀಕರಿಸಿ
         </button>
         <button className={`sidebar-button ${selectedOption === "zone" ? "active" : ""}`} onClick={() => handleSelect("zone")}>
           Zone / ವಲಯ
@@ -118,6 +116,9 @@ export const Dashboard = ({ userRole }) => {
             </button>
           </>
         )}
+        <button className="sidebar-button logout-button" onClick={onLogout}>
+          Logout / ಲಾಗ್ ಔಟ್
+        </button>
       </div>
 
       <div className="main-content">
