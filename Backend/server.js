@@ -65,10 +65,12 @@ app.get("/search-devotees", (req, res) => {
   }
 
   const query = `
-    SELECT id, name, parent_name, dob, mobile, email, pincode, address, zone
+    SELECT id, name, parent_name, dob, mobile, email, pincode, address, zone, head_of_house
     FROM devotees 
-    WHERE name LIKE ? LIMIT 10
+    WHERE name LIKE ? 
+    LIMIT 20
   `;
+
   db.query(query, [`%${searchQuery}%`], (err, result) => {
     if (err) {
       return res.status(500).json({ error: "⚠️ Database error" });
@@ -76,6 +78,7 @@ app.get("/search-devotees", (req, res) => {
     res.status(200).json(result);
   });
 });
+
 
 app.post("/register-pooja", (req, res) => {
   const { devoteeId, devoteeName, poojaName, poojaDate, tithi } = req.body;
@@ -432,7 +435,7 @@ app.put("/devotees/:id", (req, res) => {
   const { id } = req.params;
   const { 
     name, parent_name, dob, mobile, email, pincode, zone, 
-    address1, address2, address3, address4, rashi, nakshatra, gotra 
+    address1, address2, address3, address4, rashi, nakshatra, gotra, head_of_house
   } = req.body;
 
   if (!name || !parent_name || !dob || !mobile || !pincode || !zone) {
@@ -451,11 +454,11 @@ app.put("/devotees/:id", (req, res) => {
 
   const query = `
     UPDATE devotees 
-    SET name=?, parent_name=?, dob=?, mobile=?, email=?, pincode=?, zone=?, address=?, rashi=?, nakshatra=?, gotra=? 
+    SET name=?, parent_name=?, dob=?, mobile=?, email=?, pincode=?, zone=?, address=?, rashi=?, nakshatra=?, gotra=?, head_of_house=? 
     WHERE id=?
   `;
 
-  db.query(query, [name, parent_name, dob, mobile, email, pincode, zone, fullAddress, rashi, nakshatra, gotra, id], (err, result) => {
+  db.query(query, [name, parent_name, dob, mobile, email, pincode, zone, fullAddress, rashi, nakshatra, gotra, head_of_house, id], (err, result) => {
     if (err) {
       console.error("❌ Database Update Error:", err);
       return res.status(500).json({ error: "⚠️ Error updating devotee" });

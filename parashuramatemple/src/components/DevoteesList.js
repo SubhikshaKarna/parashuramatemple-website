@@ -49,6 +49,7 @@ const DevoteesList = () => {
       address2: addressParts[1] || "",
       address3: addressParts[2] || "",
       address4: addressParts[3] || "",
+      head_of_house: devotee.head_of_house || "No",
     });
 
     setValidationErrors({});
@@ -57,7 +58,7 @@ const DevoteesList = () => {
   const validateFields = () => {
     let errors = {};
     let firstInvalidField = null;
-  
+
     const requiredFields = ["name", "dob"];
     for (let field of requiredFields) {
       if (!editingDevotee[field]?.trim()) {
@@ -65,28 +66,27 @@ const DevoteesList = () => {
         firstInvalidField = firstInvalidField || field;
       }
     }
-  
+
     if (editingDevotee.mobile && !/^\d{10}$/.test(editingDevotee.mobile)) {
       errors.mobile = true;
       firstInvalidField = firstInvalidField || "mobile";
     }
-  
+
     if (editingDevotee.email && !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(editingDevotee.email)) {
       errors.email = true;
       firstInvalidField = firstInvalidField || "email";
     }
-  
+
     if (editingDevotee.pincode && !/^\d{6}$/.test(editingDevotee.pincode)) {
       errors.pincode = true;
       firstInvalidField = firstInvalidField || "pincode";
     }
-  
-    // Keep only the first invalid field
+
     setValidationErrors(firstInvalidField ? { [firstInvalidField]: true } : {});
-  
-    return !firstInvalidField; // Return true if no errors
+
+    return !firstInvalidField;
   };
-  
+
   const handleSave = async () => {
     if (!validateFields()) return;
 
@@ -95,7 +95,9 @@ const DevoteesList = () => {
       editingDevotee.address2,
       editingDevotee.address3,
       editingDevotee.address4,
-    ].filter(Boolean).join(", ");
+    ]
+      .filter(Boolean)
+      .join(", ");
 
     try {
       await axios.put(`http://localhost:5000/devotees/${editingDevotee.id}`, {
@@ -193,18 +195,38 @@ const DevoteesList = () => {
                           onChange={(e) => {
                             setEditingDevotee({ ...editingDevotee, [field]: e.target.value });
 
-                            // Remove red border if this field was the invalid one
                             if (validationErrors[field]) {
                               setValidationErrors({});
                             }
                           }}
                           className={`custom-input ${validationErrors[field] ? "input-error" : ""}`}
                         />
-
                       </div>
                     )
                   )}
+                  
+                  {/* Head of House Toggle */}
+                  <div className="form-group">
+                    <label>Head of the House</label>
+                    <div className="switch-container">
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={editingDevotee.head_of_house === "Yes"}
+                          onChange={() =>
+                            setEditingDevotee({
+                              ...editingDevotee,
+                              head_of_house: editingDevotee.head_of_house === "Yes" ? "No" : "Yes",
+                            })
+                          }
+                        />
+                        <span className="slider round"></span>
+                      </label>
+                      <span className="switch-label">{editingDevotee.head_of_house === "Yes" ? "YES" : "NO"}</span>
+                    </div>
+                  </div>
                 </div>
+
                 <div className="modal-buttons">
                   <button onClick={handleSave} className="save-button">
                     Save
