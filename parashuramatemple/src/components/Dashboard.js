@@ -15,22 +15,35 @@ import FetchDevoteeDetails from "./FetchDevoteeDetails";
 import RegularPoojaList from "./RegularPoojaList"; 
 
 export const Dashboard = ({ userRole, onLogout }) => {
-  const [selectedOption, setSelectedOption] = useState(
-    localStorage.getItem("selectedOption") || "dashboard"
-  );
+  const [selectedOption, setSelectedOption] = useState("dashboard");
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const storedOption = localStorage.getItem("selectedOption");
+    if (storedOption) {
+      setSelectedOption(storedOption);
+    }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
     localStorage.setItem("selectedOption", option);
+    setIsMobileSidebarOpen(false); // Close sidebar after selecting an option on mobile
   };
 
-  useEffect(() => {
-    const storedOption = localStorage.getItem("selectedOption");
-    if (!storedOption) {
-      setSelectedOption("dashboard");
-    }
-  }, []);
-  
+  const handleLogout = () => {
+    localStorage.clear();
+    onLogout();
+  };
+
   const renderContent = () => {
     switch (selectedOption) {
       case "pooja-registration":
@@ -89,7 +102,15 @@ export const Dashboard = ({ userRole, onLogout }) => {
 
   return (
     <div className="dashboard">
-      <div className="sidebar">
+      {/* Mobile Sidebar Toggle Button */}
+      <div className="mobile-header">
+        <button className="menu-toggle" onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}>
+          ☰ Menu
+        </button>
+      </div>
+
+      {/* Sidebar */}
+      <div className={`sidebar ${isMobileSidebarOpen ? "open" : ""}`}>
         <h2 className="sidebar-title">Menu / ಮೆನು</h2>
         <button className={`sidebar-button ${selectedOption === "dashboard" ? "active" : ""}`} onClick={() => handleSelect("dashboard")}>
           Dashboard / ಡ್ಯಾಶ್‌ಬೋರ್ಡ್
@@ -116,13 +137,14 @@ export const Dashboard = ({ userRole, onLogout }) => {
             </button>
           </>
         )}
-        <button className="sidebar-button logout-button" onClick={onLogout}>
+        <button className="sidebar-button logout-button" onClick={handleLogout}>
           Logout / ಲಾಗ್ ಔಟ್
         </button>
       </div>
 
+      {/* Main Content */}
       <div className="main-content">
-        <Header />
+        {!isMobile && <Header />} {/* Show Header only on non-mobile devices */}
         <div className="content-area">{renderContent()}</div>
       </div>
     </div>

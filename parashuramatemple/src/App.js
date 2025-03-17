@@ -9,7 +9,9 @@ function App() {
   // Check for stored login state on page load
   useEffect(() => {
     const storedUserRole = localStorage.getItem("userRole");
-    if (storedUserRole) {
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (storedIsLoggedIn && storedUserRole) {
       setIsLoggedIn(true);
       setUserRole(storedUserRole);
     }
@@ -19,11 +21,13 @@ function App() {
     if (username === "admin" && password === "password") {
       setIsLoggedIn(true);
       setUserRole("admin");
-      localStorage.setItem("userRole", "admin"); // Save to localStorage
+      localStorage.setItem("userRole", "admin");
+      localStorage.setItem("isLoggedIn", "true");
     } else if (username === "common" && password === "password") {
       setIsLoggedIn(true);
       setUserRole("common");
-      localStorage.setItem("userRole", "common"); // Save to localStorage
+      localStorage.setItem("userRole", "common");
+      localStorage.setItem("isLoggedIn", "true");
     } else {
       alert("Invalid credentials. Please try again.");
     }
@@ -32,7 +36,8 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserRole(null);
-    localStorage.removeItem("userRole"); // Clear localStorage on logout
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("isLoggedIn");
   };
 
   return (
