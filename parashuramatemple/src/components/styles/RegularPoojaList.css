@@ -1,64 +1,107 @@
 .regular-pooja-container {
-    width: 90%;
-    margin: auto;
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  h2 {
-    color: rgb(96, 2, 2);
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .filter-section {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-    margin-right: 10px;
-    color: rgb(96, 2, 2);
-  }
-  
+  width: 80%;
+  margin: auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 10px;
+}
 
-  
-  button {
-    background-color: rgb(96, 2, 2);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
+h2 {
+  color: rgb(96, 2, 2);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.filter-section {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: rgb(96, 2, 2);
+}
+
+.download-pdf {
+  background-color: rgb(96, 2, 2);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.download-pdf:hover {
+  background-color: rgb(120, 10, 10);
+}
+
+.pooja-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pooja-table th, .pooja-table td {
+  border: 1px solid rgb(96, 2, 2);
+  padding: 10px;
+  text-align: center;
+}
+
+.pooja-table th {
+  background-color: rgb(96, 2, 2);
+  color: white;
+}
+
+.pooja-table tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.pooja-table tr:hover {
+  background-color: #e8e8e8;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .regular-pooja-container {
+    width: 95%;
   }
-  
-  button:hover {
-    background-color: rgb(120, 10, 10);
+
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .pooja-table {
+
+  label {
+    margin-bottom: 10px;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
   }
-  
+
   .pooja-table th, .pooja-table td {
-    border: 1px solid rgb(96, 2, 2);
-    padding: 10px;
-    text-align: center;
+    padding: 8px;
+    font-size: 14px;
   }
-  
-  .pooja-table th {
-    background-color: rgb(96, 2, 2);
-    color: white;
+  .search-btn{
+    width: 30%;
   }
-  
-  .pooja-table tr:nth-child(even) {
-    background-color: #f8f8f8;
+}
+
+@media screen and (max-width: 480px) {
+  .regular-pooja-container {
+    width: 100%;
+    padding: 5px;
   }
-  
-  .pooja-table tr:hover {
-    background-color: #e8e8e8;
+
+  h2 {
+    font-size: 20px;
   }
-  
+
+  .pooja-table {
+    font-size: 12px;
+  }
+
+  .pooja-table th, .pooja-table td {
+    padding: 6px;
+  }
+}

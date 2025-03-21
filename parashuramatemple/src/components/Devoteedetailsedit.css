@@ -1,14 +1,15 @@
 .formm {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
   background-color: #f8f9fa;
-  padding: 10px;
-  margin-top: -100px; /* Moves it higher */
+  padding: 100px 10px 10px; /* Adjusted top padding */
+  overflow-y: auto;
 }
 
 
+/* Ensure container does not exceed viewport height */
 .container {
   width: 90%;
   max-width: 1000px;
@@ -17,7 +18,10 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  max-height: 90vh; /* Set max height for scrolling */
+  overflow-y: auto; /* Enable scrolling inside container */
 }
+
 
 /* === Search Section === */
 .search-container {
@@ -55,15 +59,17 @@
 /* === Success Message === */
 .success-overlay {
   position: fixed;
-  top: 20px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background-color: #e4ae5c;
-  color:rgb(75, 0, 0) ;
+  color: rgb(75, 0, 0);
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
+  text-align: center; /* Ensures text is centered */
 }
+
 
 /* === Error Message === */
 .error-message {
@@ -213,6 +219,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.3s;
+  margin-right: 10px;
 }
 
 .cancel-button {
@@ -223,6 +230,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.3s;
+  margin-left: 10px;
 }
 
 .save-button:hover {
@@ -235,6 +243,7 @@
 
 /* === Responsive Design === */
 @media (max-width: 768px) {
+  
   /* Adjust modal grid to single column on small screens */
   .modal-grid {
     grid-template-columns: repeat(1, 1fr);
@@ -248,12 +257,23 @@
 
   /* Buttons stack on small screens */
   .modal-buttons {
+    display: flex;
     flex-direction: column;
+    width: 100%;
+    align-items: center;  /* Centers buttons horizontally */
   }
 
   .save-button, .cancel-button {
-    width: 100%;
+    width: 80%;  /* Adjust width if needed */
     margin: 5px 0;
+  }
+
+  /* Centering a single button */
+  .centered-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
   /* Table responsive adjustments */
@@ -267,6 +287,7 @@
     font-size: 0.9rem;
   }
 }
+
 
 .input-error {
   border: 2px solid red !important;

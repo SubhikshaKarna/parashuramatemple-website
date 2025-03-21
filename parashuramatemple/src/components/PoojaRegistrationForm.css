@@ -70,7 +70,7 @@ input[type="date"] {
 }
 
 /* Buttons */
-button {
+.pooja--preview--button {
   padding: 10px 10px;
   background-color: var(--button-background-color);
   color: white;
@@ -81,7 +81,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.pooja--preview--button:hover {
   background-color: var(--button-hover-color);
 }
 
@@ -311,30 +311,77 @@ input[type="date"].error-border {
   }
 }
 
-@media (max-width: 768px) { /* Adjustments for mobile screens */
-  .pooja--registration--container {
-    width: 90%;
+@media (max-width: 768px) {
+  /* Ensure Select Field Takes Full Width */
+  select {
+    width: 50%;
     padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    background: white;
+    appearance: none; /* Removes default arrow for a custom dropdown */
   }
 
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  input, select, button {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  .pooja--popup {
-    width: 80%;
-  }
-
-  .pooja--preview--button, 
-  .pooja--close--button {
+  /* Dropdown Wrapper */
+  .pooja--dropdown {
+    position: relative;
     width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-top: 10px;
+  }
+
+  /* Dropdown List */
+  .pooja--dropdown ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ddd;
+    z-index: 2000;
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Dropdown Items */
+  .pooja--dropdown li {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap; /* Prevents text wrapping */
+  }
+
+  .pooja--dropdown li:hover {
+    background: #f0f0f0;
+  }
+
+  /* Fix Dropdown Arrow */
+  .pooja--dropdown::after {
+    content: "▼";
+    font-size: 14px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  /* Ensure dropdown doesn't overlap */
+  .pooja--dropdown select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
   }
 }
+
 
 @media (max-width: 480px) { /* Small mobile screens */
   .pooja--registration--container {

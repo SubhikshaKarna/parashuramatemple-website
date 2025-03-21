@@ -6,7 +6,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
-  // Check for stored login state on page load
   useEffect(() => {
     const storedUserRole = localStorage.getItem("userRole");
     const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -17,19 +16,28 @@ function App() {
     }
   }, []);
 
-  const handleLogin = (username, password) => {
-    if (username === "admin" && password === "password") {
-      setIsLoggedIn(true);
-      setUserRole("admin");
-      localStorage.setItem("userRole", "admin");
-      localStorage.setItem("isLoggedIn", "true");
-    } else if (username === "common" && password === "password") {
-      setIsLoggedIn(true);
-      setUserRole("common");
-      localStorage.setItem("userRole", "common");
-      localStorage.setItem("isLoggedIn", "true");
-    } else {
-      alert("Invalid credentials. Please try again.");
+  // Login function with backend authentication
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsLoggedIn(true);
+        setUserRole(data.role);
+        localStorage.setItem("userRole", data.role);
+        localStorage.setItem("isLoggedIn", "true");
+      } else {
+        alert(data.message || "Invalid credentials. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Login failed. Please check your network connection.");
     }
   };
 

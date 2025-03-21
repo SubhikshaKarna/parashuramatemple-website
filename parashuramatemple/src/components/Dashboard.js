@@ -4,7 +4,7 @@ import Header from "./Header";
 import PoojaComponent from "./PoojaComponent";
 import PoojaRegistrationForm from "./PoojaRegistrationForm";
 import { FetchPoojaRegistrations } from "./FetchPoojaRegistrations";
-import UpdateAddressForm from "./DevoteesList";
+import UpdateAddressForm from "./Devoteedetailsedit.js";
 import ZoneComponent from "./ZoneComponent";
 import DevoteesRegistrationForm from "./DevoteesRegistrationForm";
 import DeleteDevotee from "./DeleteDevotee"; 
@@ -13,6 +13,7 @@ import DeletePooja from "./DeletePooja";
 import DeletePoojaRegistration from "./DeletePoojaRegistration"; 
 import FetchDevoteeDetails from "./FetchDevoteeDetails";
 import RegularPoojaList from "./RegularPoojaList"; 
+import { ChangePassword } from "./ChangePassword";
 
 export const Dashboard = ({ userRole, onLogout }) => {
   const [selectedOption, setSelectedOption] = useState("dashboard");
@@ -38,7 +39,17 @@ export const Dashboard = ({ userRole, onLogout }) => {
     localStorage.setItem("selectedOption", option);
     setIsMobileSidebarOpen(false); // Close sidebar after selecting an option on mobile
   };
-
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobileSidebarOpen && !event.target.closest(".sidebar") && !event.target.closest(".menu-toggle")) {
+        setIsMobileSidebarOpen(false);
+      }
+    };
+  
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [isMobileSidebarOpen]);
+  
   const handleLogout = () => {
     localStorage.clear();
     onLogout();
@@ -70,6 +81,8 @@ export const Dashboard = ({ userRole, onLogout }) => {
         return <FetchDevoteeDetails />;
       case "regular-pooja-list":
         return <RegularPoojaList />;
+      case "Change-Password":
+        return <ChangePassword/>;
       case "dashboard":
       default:
         return (
@@ -137,6 +150,9 @@ export const Dashboard = ({ userRole, onLogout }) => {
             </button>
           </>
         )}
+        <button className={`sidebar-button ${selectedOption === "Change-password" ? "active" : ""}`} onClick={() => handleSelect("Change-Password")}>
+          Change Password/ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ
+        </button>
         <button className="sidebar-button logout-button" onClick={handleLogout}>
           Logout / ಲಾಗ್ ಔಟ್
         </button>

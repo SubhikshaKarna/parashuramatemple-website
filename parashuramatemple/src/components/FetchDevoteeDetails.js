@@ -137,10 +137,10 @@ const FetchDevoteeDetails = () => {
               </table>
             </div>
             <div className="modal-footer">
-              <button className="download-button" onClick={downloadPDF}>
+              <button className="download-button-pop" onClick={downloadPDF}>
                 Download
               </button>
-              <button className="close-buttonn" onClick={() => setIsDataPopupOpen(false)}>
+              <button className="close-button-pop" onClick={() => setIsDataPopupOpen(false)}>
                 Close
               </button>
             </div>

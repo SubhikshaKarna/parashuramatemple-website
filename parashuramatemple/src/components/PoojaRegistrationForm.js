@@ -130,29 +130,29 @@ const PoojaRegistrationForm = () => {
       <h2>Pooja Registration(ಪೂಜೆ ನೋಂದಣಿ)</h2>
       <br></br>
       <div className="devotee-dropdown-container">
-  <label>Devotee Name (ಭಕ್ತರ ಹೆಸರು) : *</label>
-  <input
-    type="text"
-    value={devoteeName}
-    onChange={(e) => {
-      handleDevoteeSearch(e.target.value);
-      handleInputChange(e, "devoteeName");
-    }}
-    placeholder="Search & Select Devotee"
-    className={`devotee-input ${errors.devoteeName ? "error-border" : ""}`}
-    onFocus={() => setShowAutocomplete(true)}
-  />
-  
-  {showAutocomplete && devotees.length > 0 && (
-    <ul className="devotee-dropdown">
-      {devotees.map((devotee) => (
-        <li key={devotee.id} onClick={() => handleDevoteeSelect(devotee)}>
-          {devotee.name} (ID: {devotee.id})
-        </li>
-      ))}
-    </ul>
-  )}
-</div>
+          <label>Devotee Name (ಭಕ್ತರ ಹೆಸರು) : *</label>
+          <input
+            type="text"
+            value={devoteeName}
+            onChange={(e) => {
+              handleDevoteeSearch(e.target.value);
+              handleInputChange(e, "devoteeName");
+            }}
+            placeholder="Search & Select Devotee"
+            className={`devotee-input ${errors.devoteeName ? "error-border" : ""}`}
+            onFocus={() => setShowAutocomplete(true)}
+          />
+          
+          {showAutocomplete && devotees.length > 0 && (
+            <ul className="devotee-dropdown">
+              {devotees.map((devotee) => (
+                <li key={devotee.id} onClick={() => handleDevoteeSelect(devotee)}>
+                  {devotee.name} (ID: {devotee.id})
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
 
 

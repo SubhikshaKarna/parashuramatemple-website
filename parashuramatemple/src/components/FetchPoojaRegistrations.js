@@ -11,28 +11,30 @@ export const FetchPoojaRegistrations = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dateError, setDateError] = useState("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const [noDataMessage, setNoDataMessage] = useState(""); // New state for no data message
+  const [noDataMessage, setNoDataMessage] = useState("");
 
   const fetchRegistrations = () => {
-    setIsButtonClicked(true); // Set to true when the button is clicked
+    setIsButtonClicked(true);
+    setRegistrations([]); // Clear previous registrations
+    setNoDataMessage(""); // Reset no-data message
 
     if (!startDate || !endDate) {
       setDateError("Please select both start and end dates.");
-      return; // Don't proceed further if dates are missing
+      return;
     }
 
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    start.setHours(0, 0, 0, 0); // Set time to 00:00:00
-    end.setHours(23, 59, 59, 999); // Set end time to 23:59:59.999 for full day inclusion
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
 
     if (start > end) {
       setDateError("Start date cannot be later than end date.");
       return;
     }
 
-    setDateError(""); // Clear any previous errors
+    setDateError("");
 
     axios
       .get("http://localhost:5000/api/pooja_registrations", {
@@ -45,24 +47,16 @@ export const FetchPoojaRegistrations = () => {
         console.log("Fetched registrations:", response.data);
         if (response.data.length === 0) {
           setNoDataMessage("No data found in this date range.");
-          setIsModalOpen(true); // Open the modal to show the message
+          setIsModalOpen(true);
         } else {
           setRegistrations(response.data);
-          setIsModalOpen(true); // Open the modal to display the data
+          setIsModalOpen(true);
         }
       })
       .catch((error) => {
         console.error("Error fetching registrations:", error);
-
-        if (error.response && error.response.status === 404) {
-          // If the backend returns a 404, treat it as 'no data'
-          setNoDataMessage("No data found in this date range.");
-          setIsModalOpen(true); // Open the modal to show the message
-        } else {
-          // Handle other errors such as network issues
-          setNoDataMessage("Failed to retrieve registrations.");
-          setIsModalOpen(true); // Open the modal on error
-        }
+        setNoDataMessage("Failed to retrieve registrations.");
+        setIsModalOpen(true);
       });
   };
 
@@ -72,7 +66,6 @@ export const FetchPoojaRegistrations = () => {
     } else if (field === "endDate") {
       setEndDate(value);
     }
-
     if (isButtonClicked) {
       setIsButtonClicked(false);
     }
@@ -89,41 +82,38 @@ export const FetchPoojaRegistrations = () => {
       alert("No data available to download.");
       return;
     }
-  
+
     const doc = new jsPDF();
     let yOffset = 20;
-  
+
     registrations.forEach((reg, index) => {
       if (yOffset > 260) {
         doc.addPage();
         yOffset = 20;
       }
-  
+
       doc.setFont("helvetica", "bold");
       doc.setFontSize(14);
       doc.text(reg.devotee_name, 14, yOffset);
-  
+
       doc.setFont("helvetica", "normal");
       doc.setFontSize(12);
-  
-      let addressLines = doc.splitTextToSize(reg.address, 130); 
+
+      let addressLines = doc.splitTextToSize(reg.address, 130);
       doc.text(addressLines, 14, yOffset + 8);
-  
+
       let addressHeight = addressLines.length * 6;
       doc.text(reg.pincode, 14, yOffset + 10 + addressHeight);
       doc.text(reg.mobile, 14, yOffset + 18 + addressHeight);
-  
-      let boxHeight = 25 + addressHeight; 
-      doc.rect(12, yOffset - 5, 140, boxHeight); 
-  
+
+      let boxHeight = 25 + addressHeight;
+      doc.rect(12, yOffset - 5, 140, boxHeight);
+
       yOffset += boxHeight + 6;
     });
-  
-    doc.save("postal_labels.pdf");
+
+    doc.save("pooja_registrations.pdf");
   };
-  
-  
-  
 
   return (
     <div className="fetch-registrations-container">
@@ -163,7 +153,6 @@ export const FetchPoojaRegistrations = () => {
         </button>
       </div>
 
-      {/* Modal for showing "No data found" message */}
       {noDataMessage && (
         <div className="modal-overlay-unique">
           <div className="modal-content-unique">
@@ -176,7 +165,7 @@ export const FetchPoojaRegistrations = () => {
                 className="close-button-unique"
                 onClick={() => {
                   setIsModalOpen(false);
-                  setNoDataMessage(""); // Clear the message after closing
+                  setNoDataMessage("");
                 }}
               >
                 Close

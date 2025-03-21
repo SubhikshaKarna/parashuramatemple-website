@@ -13,9 +13,9 @@ app.use(bodyParser.json());
 // MySQL Connection Setup
 const db = mysql.createConnection({
   host: "localhost",
-  user: "root",  // Default user for XAMPP
-  password: "",  // No password for XAMPP by default
-  database: "project",  // Your database name
+  user: "root",
+  password: "",
+  database: "project1",
 });
 
 db.connect((err) => {
@@ -25,6 +25,52 @@ db.connect((err) => {
     console.log("✅ Connected to MySQL database");
   }
 });
+
+// 🔐 **Login Endpoint (No Hashing)**
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  const sql = "SELECT * FROM users WHERE username = ?";
+  db.query(sql, [username], (err, results) => {
+    if (err) return res.status(500).json({ message: "Database error" });
+
+    if (results.length === 0) return res.status(401).json({ message: "Invalid username or password" });
+
+    const user = results[0];
+
+    if (password !== user.password) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    res.json({ message: "Login successful", role: user.role });
+  });
+});
+
+// 🔄 **Password Update Endpoint (No Hashing)**
+app.post("/update-password", (req, res) => {
+  const { username, oldPassword, newPassword } = req.body;
+
+  const sqlSelect = "SELECT password FROM users WHERE username = ?";
+  db.query(sqlSelect, [username], (err, result) => {
+    if (err) return res.status(500).json({ message: "Database error" });
+
+    if (result.length === 0) return res.status(404).json({ message: "User not found" });
+
+    const storedPassword = result[0].password;
+
+    if (oldPassword !== storedPassword) {
+      return res.status(400).json({ message: "Incorrect old password" });
+    }
+
+    const sqlUpdate = "UPDATE users SET password = ? WHERE username = ?";
+    db.query(sqlUpdate, [newPassword, username], (err) => {
+      if (err) return res.status(500).json({ message: "Failed to update password" });
+      res.json({ message: "Password updated successfully" });
+    });
+  });
+});
+
+
 
 // 🔹 API to Insert Pooja Data (Optional, if you want to add new pooja names)
 app.post("/add-pooja", (req, res) => {

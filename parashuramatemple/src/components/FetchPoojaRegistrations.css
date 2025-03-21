@@ -140,6 +140,7 @@ button {
 .close-button-unique {
   background-color: #808080;
   color: white;
+  margin-right: 10px;
 }
 
 .close-button-unique:hover {
@@ -149,6 +150,7 @@ button {
 .download-pdf-button-unique {
   background-color: maroon;
   color: white;
+  margin-left: 10px;
 }
 
 .download-pdf-button-unique:hover {
@@ -183,25 +185,36 @@ button {
   background-color: #f1f1f1;
 }
 
-/* Responsive design */
+/* Modal styling for mobile */
 @media (max-width: 768px) {
   .modal-content-unique {
-    width: 95%;
+    width: 90%;
+    max-width: 90%;
     padding: 15px;
   }
 
-  button {
-    font-size: 14px;
-    padding: 8px 15px;
+  .modal-body-unique {
+    max-height: 300px; /* Adjusted for smaller screens */
+    overflow-y: auto;  /* Enable scrolling */
+    padding: 10px;
   }
 
-  input[type="date"] {
-    font-size: 14px;
+  .modal-header-unique {
+    font-size: 18px;
   }
 
   .modal-footer-unique {
     flex-direction: column;
     gap: 10px;
   }
+
+  /* Buttons inside modal */
+  .close-button-unique,
+  .download-pdf-button-unique {
+    width: 50%; /* Full width buttons for better usability */
+    font-size: 14px;
+    padding: 10px;
+  }
 }
+
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactDOM from "react-dom";
-import "./DevoteesList.css";
+import "./Devoteedetailsedit.css";
 
 const DevoteesList = () => {
   const [name, setName] = useState("");
@@ -89,7 +89,7 @@ const DevoteesList = () => {
 
   const handleSave = async () => {
     if (!validateFields()) return;
-
+  
     const fullAddress = [
       editingDevotee.address1,
       editingDevotee.address2,
@@ -98,27 +98,27 @@ const DevoteesList = () => {
     ]
       .filter(Boolean)
       .join(", ");
-
+  
     try {
       await axios.put(`http://localhost:5000/devotees/${editingDevotee.id}`, {
         ...editingDevotee,
         address: fullAddress,
       });
-
-      setDevotees((prevDevotees) =>
-        prevDevotees.map((devotee) =>
-          devotee.id === editingDevotee.id ? { ...editingDevotee, address: fullAddress } : devotee
-        )
-      );
-
+  
       setSuccessMessage("✅ Devotee updated successfully!");
       setTimeout(() => setSuccessMessage(""), 2000);
-
+  
+      // Clear search data after editing
+      setDevotees([]);
+      setSearchPerformed(false);
+      setName("");
+  
       setEditingDevotee(null);
     } catch (error) {
       console.error("⚠️ Error updating devotee:", error.response?.data || error);
     }
   };
+  
 
   const handleCancel = () => {
     setEditingDevotee(null);
@@ -180,9 +180,6 @@ const DevoteesList = () => {
           ReactDOM.createPortal(
             <div className="modal-overlay">
               <div className="modal-content">
-                <button onClick={handleCancel} className="custom-close-button">
-                  &times;
-                </button>
                 <h3 className="modal-title">Edit Devotee</h3>
                 <div className="modal-grid">
                   {["name", "parent_name", "dob", "mobile", "email", "pincode", "rashi", "nakshatra", "gotra", "address1", "address2", "address3", "address4"].map(

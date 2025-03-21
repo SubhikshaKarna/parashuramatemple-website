@@ -204,38 +204,43 @@ const DevoteesRegistrationForm = () => {
         </div>
 
         <div className="button-container">
-          <button type="submit">Submit</button>
+          <button className="register-btn" type="submit">Submit</button>
         </div>
       </form>
 
 
 
       {/* Preview Modal */}
-      {isModalOpen && (
-        <div className="modal">
-          <h3>Review Your Information</h3>
-          {Object.entries(previewData).map(([key, value]) => {
-            if (key.startsWith("address") && key !== "address") return null; // Skip individual address lines
-            return (
-              <p key={key}>
-                <strong>{key}:</strong> {value}
-              </p>
-            );
-          })}
-          <button onClick={handleConfirmSubmission}>Confirm</button>
-          <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-        </div>
-      )}
+{/* Preview Modal */}
+{isModalOpen && (
+  <div className="modal-overlay">
+    <div className="modal">
+      <h3>Review Your Information</h3>
+      {Object.entries(previewData).map(([key, value]) => {
+        if (key.startsWith("address") && key !== "address") return null;
+        return (
+          <p key={key}>
+            <strong>{key}:</strong> {value}
+          </p>
+        );
+      })}
+      <button className="confirm-btn" onClick={handleConfirmSubmission}>Confirm</button>
+      <button className="cancel-btn" onClick={() => setIsModalOpen(false)}>Cancel</button>
+    </div>
+  </div>
+)}
 
+{/* Success Modal */}
+{isSuccessModalOpen && (
+  <div className="modal-overlay">
+    <div className="modal">
+      <h3>Registration Successful!</h3>
+      <p>Thank you for registering.</p>
+      <button className="ok-btn" onClick={() => setIsSuccessModalOpen(false)}>OK</button>
+    </div>
+  </div>
+)}
 
-      {/* Success Modal */}
-      {isSuccessModalOpen && (
-        <div className="modal">
-          <h3>Registration Successful!</h3>
-          <p>Thank you for registering.</p>
-          <button onClick={() => setIsSuccessModalOpen(false)}>OK</button>
-        </div>
-      )}
     </div>
   );
 };

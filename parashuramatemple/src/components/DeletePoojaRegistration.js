@@ -4,22 +4,9 @@ import "./DeletePoojaRegistration.css";
 
 const DeletePoojaRegistration = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchType, setSearchType] = useState("devotee_name"); // Default search type
+  const [searchType, setSearchType] = useState("devotee_name");
   const [poojaList, setPoojaList] = useState([]);
-  const [noData, setNoData] = useState(false); // Track if no data is found
-
-  // Handle input change
-  const handleSearchInputChange = async (event) => {
-    const query = event.target.value;
-    setSearchQuery(query);
-
-    if (query.trim()) {
-      fetchPoojaRegistrations(query, searchType);
-    } else {
-      setPoojaList([]);
-      setNoData(false);
-    }
-  };
+  const [noData, setNoData] = useState(false);
 
   // Fetch data from API
   const fetchPoojaRegistrations = async (query, type) => {
@@ -29,6 +16,7 @@ const DeletePoojaRegistration = () => {
       );
       if (response.data.length === 0) {
         setNoData(true);
+        setPoojaList([]);
       } else {
         setPoojaList(response.data);
         setNoData(false);
@@ -40,12 +28,31 @@ const DeletePoojaRegistration = () => {
     }
   };
 
+  // Handle input change
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Handle Enter key press
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && searchQuery.trim()) {
+      fetchPoojaRegistrations(searchQuery, searchType);
+    }
+  };
+
+  // Handle search button click
+  const handleSearchClick = () => {
+    if (searchQuery.trim()) {
+      fetchPoojaRegistrations(searchQuery, searchType);
+    }
+  };
+
   // Handle deletion
   const handleDeletePoojaRegistration = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/delete/pooja-registration/${id}`);
-      setPoojaList(poojaList.filter((pooja) => pooja.id !== id));
-      if (poojaList.length === 1) setNoData(true); // If last item is deleted, show "No Data Found"
+      setPoojaList((prevList) => prevList.filter((pooja) => pooja.id !== id));
+      if (poojaList.length === 1) setNoData(true);
     } catch (err) {
       console.error("Error deleting pooja registration", err);
     }
@@ -61,8 +68,9 @@ const DeletePoojaRegistration = () => {
           value={searchType}
           onChange={(e) => {
             setSearchType(e.target.value);
-            setSearchQuery(""); // Reset input on type change
+            setSearchQuery("");
             setNoData(false);
+            setPoojaList([]);
           }}
         >
           <option value="devotee_name">Search by Name</option>
@@ -74,9 +82,14 @@ const DeletePoojaRegistration = () => {
           type={searchType === "pooja_date" ? "date" : "text"}
           value={searchQuery}
           onChange={handleSearchInputChange}
+          onKeyDown={handleKeyDown}
           className="search-input"
           placeholder={`Search by ${searchType.replace("_", " ")}`}
         />
+
+        <button className="search-btn" onClick={handleSearchClick}>
+          Search
+        </button>
       </div>
 
       {noData ? (

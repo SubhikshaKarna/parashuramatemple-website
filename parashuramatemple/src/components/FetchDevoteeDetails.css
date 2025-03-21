@@ -116,27 +116,31 @@ button {
   cursor: pointer;
   transition: background 0.3s;
   white-space: nowrap; /* Prevents text wrapping */
+  width: 100%;
 }
 
 /* Corrected close button styling */
-.close-button {
+.close-button-pop {
   background: rgb(96, 2, 2);
-  color: white;
+  color:white;
   font-weight: bold;
 }
 
-.close-button:hover {
+.close-button-pop:hover {
   background: #690101; /* Darker maroon for hover effect */
 }
 
 /* Style for the download button */
-.download-button {
+.download-button-pop {
   background: rgb(96, 2, 2);
-  color: white;
-  font-weight: bold;
+  color:white;
+  width: 100%;
+
 }
 
-.download-button:hover {
+
+
+.download-button-pop:hover {
   background: #690101; /* Darker maroon for hover effect */
 }
 
@@ -212,4 +216,25 @@ button {
 
 .header-popup .nameclose-pop:hover {
   background: #ddd;
+}
+
+/* Responsive Design for Mobile & Tablet */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 80vh; /* Ensures it doesn’t get too tall */
+  }
+
+  .modal-body {
+    overflow-x: auto; /* Allows table to scroll horizontally if needed */
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .download-button-pop, .close-button-pop {
+    width: 100%;
+  }
 }

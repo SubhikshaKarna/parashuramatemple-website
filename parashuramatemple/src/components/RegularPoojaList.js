@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -8,8 +9,7 @@ const RegularPoojaList = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [poojaList, setPoojaList] = useState([]);
-  const [dataFetched, setDataFetched] = useState(false);
-  const [searched, setSearched] = useState(false); // Controls table visibility
+  const [searched, setSearched] = useState(false);
 
   const fetchPoojaList = async () => {
     if (!startDate || !endDate) {
@@ -22,12 +22,10 @@ const RegularPoojaList = () => {
         `http://localhost:5000/regular-pooja-list?start_date=${startDate}&end_date=${endDate}`
       );
       setPoojaList(response.data);
-      setDataFetched(true);
-      setSearched(true); // Show table only after search
+      setSearched(true);
     } catch (error) {
       console.error("Error fetching pooja list:", error);
       setPoojaList([]);
-      setDataFetched(true);
       setSearched(true);
     }
   };
@@ -70,6 +68,7 @@ const RegularPoojaList = () => {
 
   return (
     <div className="regular-pooja-container">
+
       <h2>Regular Pooja List / ನಿಯಮಿತ ಪೂಜೆ ಪಟ್ಟಿ</h2>
 
       <div className="filter-section">
@@ -113,7 +112,7 @@ const RegularPoojaList = () => {
           {poojaList.length > 0 ? (
             <>
               <div className="download-section">
-                <button onClick={downloadPDF} className="download-btn">
+                <button onClick={downloadPDF} className="download-pdf">
                   Download PDF
                 </button>
               </div>
