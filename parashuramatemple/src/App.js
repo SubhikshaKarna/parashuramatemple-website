@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Dashboard } from "./components/Dashboard"; 
-import { Login } from "./components/Login"; 
+import { Dashboard } from "./components/Dashboard";
+import { Login } from "./components/Login";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const storedUserRole = localStorage.getItem("userRole");
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const storedUserRole = sessionStorage.getItem("userRole");
+    const storedIsLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
     if (storedIsLoggedIn && storedUserRole) {
       setIsLoggedIn(true);
@@ -16,7 +16,6 @@ function App() {
     }
   }, []);
 
-  // Login function with backend authentication
   const handleLogin = async (username, password) => {
     try {
       const response = await fetch("http://localhost:5000/login", {
@@ -30,8 +29,8 @@ function App() {
       if (response.ok) {
         setIsLoggedIn(true);
         setUserRole(data.role);
-        localStorage.setItem("userRole", data.role);
-        localStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("userRole", data.role);
+        sessionStorage.setItem("isLoggedIn", "true");
       } else {
         alert(data.message || "Invalid credentials. Please try again.");
       }
@@ -44,8 +43,8 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserRole(null);
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("userRole");
+    sessionStorage.removeItem("isLoggedIn");
   };
 
   return (
