@@ -6,9 +6,12 @@ export const ChangePassword = ({ userRole }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
+    setError(null);
+    setSuccessMessage("");
 
     if (!username) {
       setError("Please enter a username.");
@@ -30,11 +33,10 @@ export const ChangePassword = ({ userRole }) => {
       const data = await response.json();
       
       if (response.ok) {
-        alert("Password updated successfully!");
+        setSuccessMessage("Password updated successfully!");
         setUsername("");
         setOldPassword("");
         setNewPassword("");
-        setError(null);
       } else {
         setError(data.message || "Failed to update password.");
       }
@@ -69,6 +71,7 @@ export const ChangePassword = ({ userRole }) => {
           required 
         />
         {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
         <button type="submit">Update Password</button>
       </form>
     </div>
