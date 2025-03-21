@@ -26,7 +26,7 @@ CREATE TABLE devotees (
   email VARCHAR(255),
   pincode VARCHAR(6) NOT NULL,
   zone VARCHAR(255) NOT NULL,
-  address VARCHAR(1024),  -- Storing full address in one field
+  address VARCHAR(1024),  
   rashi VARCHAR(255),
   nakshatra VARCHAR(255),
   gotra VARCHAR(255),
@@ -53,7 +53,7 @@ CREATE TABLE users (
     role ENUM('admin', 'common') NOT NULL
 );
 
--- Insert Default Users (Password should be hashed before inserting)
+
 INSERT INTO users (username, password, role) VALUES
 ('admin', 'password', 'admin'),
 ('common', 'password', 'common');
